@@ -227,7 +227,7 @@ GameObject:
   - component: {fileID: 572393174}
   - component: {fileID: 572393172}
   - component: {fileID: 572393171}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -359,13 +359,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugMode: 1
-  moveSpeed: 0
-  jumpForce: 0
+  moveSpeed: 5
+  jumpSpeed: 5
+  rigBod: {fileID: 0}
   groundAndWallCheckLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
+  stateChangeCooldown: 0.1
   groundCheckA: {x: -0.5, y: -1}
   groundCheckB: {x: 0.5, y: -1.1}
+  wallCheckRA: {x: 0.5, y: 1}
+  wallCheckRB: {x: 0.6, y: -1}
+  wallCheckLA: {x: -0.5, y: 1}
+  wallCheckLB: {x: -0.6, y: -1}
+  playerState: 0
 --- !u!1 &2050807063
 GameObject:
   m_ObjectHideFlags: 0
@@ -377,7 +384,7 @@ GameObject:
   - component: {fileID: 2050807066}
   - component: {fileID: 2050807065}
   - component: {fileID: 2050807064}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
