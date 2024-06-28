@@ -8,7 +8,13 @@ public class PlayerMove : MonoBehaviour
 
     [Header("Movement Traits")]
     public float moveSpeed;
-    public float jumpSpeed;
+    public float jumpForceInitial;
+    public float jumpForceSustained;
+    public float groundedDrag = 2.5f;
+    public float airbornDrag = 0;
+    public float jumpTime = 0.25f;
+    private float airtime = 0f;
+    public float extraGravity;
 
     [Header("Physics")]
     public Rigidbody2D rigBod;
@@ -30,8 +36,9 @@ public class PlayerMove : MonoBehaviour
     public Vector2 wallCheckLA;
     public Vector2 wallCheckLB;
 
-    public enum State { grounded, airborn, groundSliding, wallSlidingRight, wallSlidingLeft };
+    [Header("Ground Check Layermask")]
     public State playerState = State.grounded;
+    public enum State { grounded, airborn, groundSliding, wallSlidingRight, wallSlidingLeft };
 
     // Start is called before the first frame update
     void Start()
@@ -50,12 +57,34 @@ public class PlayerMove : MonoBehaviour
 
         if (playerState == State.grounded)
         {
-            float yVel = rigBod.velocity.y;
-            rigBod.velocity = new Vector2(x * moveSpeed, yVel);
+            // Ground movement force
+            rigBod.AddForce(Vector2.right * x * moveSpeed * Time.deltaTime, ForceMode2D.Force);
+
+            // Jump
+            if (j > 0)
+            {
+                // Jump force
+                rigBod.AddForce(Vector3.up * jumpForceInitial, ForceMode2D.Impulse);
+
+                // Change state
+                playerState = State.airborn;
+                StartStateCooldown();
+            }
         }
         else if (playerState == State.airborn)
         {
-
+            // Allows for short-hops and long-hops depending on how long jump key is held
+            if (airtime < jumpTime)
+            {
+                airtime += Time.deltaTime;
+                
+                // Sustain the jump force when button is held
+                if (j > 0)
+                    rigBod.AddForce(Vector3.up * jumpForceSustained * Time.deltaTime, ForceMode2D.Force);
+            }
+            // Apply extra gravity to make the player fall quicker
+            else
+                rigBod.AddForce(Vector3.up * -extraGravity * Time.deltaTime, ForceMode2D.Force);
         }
         else if (playerState == State.groundSliding)
         {
@@ -111,6 +140,16 @@ public class PlayerMove : MonoBehaviour
                     playerState = State.airborn;
                 }
             }
+        }
+
+        if (playerState == State.airborn)
+        {
+            rigBod.drag = airbornDrag;
+        }
+        else
+        {
+            rigBod.drag = groundedDrag;
+            airtime = 0;
         }
     }
 
