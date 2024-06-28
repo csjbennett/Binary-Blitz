@@ -67,8 +67,7 @@ public class PlayerMove : MonoBehaviour
                 rigBod.AddForce(Vector3.up * jumpForceInitial, ForceMode2D.Impulse);
 
                 // Change state
-                playerState = State.airborn;
-                StartStateCooldown();
+                ChangeState(State.airborn);
             }
         }
         else if (playerState == State.airborn)
@@ -92,11 +91,37 @@ public class PlayerMove : MonoBehaviour
         }
         else if (playerState == State.wallSlidingRight)
         {
+            // Wall jump
+            if (j > 0)
+            {
+                // Add jump force
+                rigBod.velocity = jumpForceInitial * new Vector2(-1, 1);
 
+                // Change state
+                ChangeState(State.airborn);
+            }
+            // Wall slide (add extra gravity)
+            else
+            {
+                rigBod.AddForce(Vector2.up * -extraGravity * Time.deltaTime, ForceMode2D.Force);
+            }
         }
         else if (playerState == State.wallSlidingLeft)
         {
+            // Wall jump
+            if (j > 0)
+            {
+                // Add jump force
+                rigBod.velocity = jumpForceInitial * new Vector2(1, 1);
 
+                // Change state
+                ChangeState(State.airborn);
+            }
+            // Wall slide (add extra gravity)
+            else
+            {
+                rigBod.AddForce(Vector2.up * -extraGravity * Time.deltaTime, ForceMode2D.Force);
+            }
         }
         else
             Debug.LogWarning("No valid state selected for player!");
@@ -125,12 +150,12 @@ public class PlayerMove : MonoBehaviour
             else
             {
                 // Wallslide right
-                if (CheckArea(wallCheckRA, wallCheckRB) && x > 0)
+                if ((CheckArea(wallCheckRA, wallCheckRB) && x > 0) || (playerState == State.wallSlidingRight && x !< 0))
                 {
                     playerState = State.wallSlidingRight;
                 }
                 // Wallslide left
-                else if (CheckArea(wallCheckLA, wallCheckLB) && x < 0)
+                else if ((CheckArea(wallCheckLA, wallCheckLB) && x < 0) || (playerState == State.wallSlidingLeft && x !> 0))
                 {
                     playerState = State.wallSlidingLeft;
                 }
@@ -153,6 +178,14 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
+    // Forces a specific state, usually from an outside source
+    public void ChangeState(State newState)
+    {
+        playerState = newState;
+
+        StartStateCooldown();
+    }
+
     // Start cooldown for changing state again
     private void StartStateCooldown()
     {
@@ -166,12 +199,6 @@ public class PlayerMove : MonoBehaviour
         yield return new WaitForSeconds(stateChangeCooldown);
 
         canChangeState = true;
-    }
-
-    // Forces a specific state, usually from an outside source
-    public void ChangeState(State newState)
-    {
-        playerState = newState;
     }
 
     // Does an OverlapArea check between two vectors for state changes
