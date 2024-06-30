@@ -4,20 +4,27 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
+    // Show debug tools like gizmos
     public bool debugMode;
 
+    [Header("Player State")]
+    public State playerState = State.grounded;
+    public enum State { grounded, airborn, groundSliding, wallSlidingRight, wallSlidingLeft };
+
     [Header("Movement Traits")]
-    public float moveSpeed;
+    public float moveForce;
+    public float slideMoveForce;
+    public float sprintSpeedMultiplier;
     public float jumpForceInitial;
     public float jumpForceSustained;
+    public Vector2 wallJumpVelocity;
     public float groundedDrag = 2.5f;
     public float airbornDrag = 0;
     public float jumpTime = 0.25f;
     private float airtime = 0f;
     public float extraGravity;
 
-    [Header("Physics")]
-    public Rigidbody2D rigBod;
+    [Header("Ground Check Layermask")]
     public LayerMask groundAndWallCheckLayers;
     
     // Prevents state from changing (prevents double jumps/glitches)
@@ -35,15 +42,22 @@ public class PlayerMove : MonoBehaviour
     [Header("Left")]
     public Vector2 wallCheckLA;
     public Vector2 wallCheckLB;
+    [Header("Crouch")]
+    public Vector2 crouchCheckA;
+    public Vector2 crouchCheckB;
 
-    [Header("Ground Check Layermask")]
-    public State playerState = State.grounded;
-    public enum State { grounded, airborn, groundSliding, wallSlidingRight, wallSlidingLeft };
+    // Etc. private variables
+    private bool canJump = true;
+    private bool canStand = true;
+    private bool groundSliding = false;
+    private Rigidbody2D rigBod;
+    private CapsuleCollider2D capsuleCollider;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        rigBod = GetComponent<Rigidbody2D>();
+        capsuleCollider = GetComponent<CapsuleCollider2D>();
     }
 
     // Update is called once per frame
@@ -52,22 +66,29 @@ public class PlayerMove : MonoBehaviour
         float x = Input.GetAxis("Horizontal");
         float y = Input.GetAxis("Vertical");
         float j = Input.GetAxis("Jump");
+        float s = Input.GetAxis("Sprint");
 
         UpdateState(x, y, j);
 
         if (playerState == State.grounded)
         {
             // Ground movement force
-            rigBod.AddForce(Vector2.right * x * moveSpeed * Time.deltaTime, ForceMode2D.Force);
+            // Sprint
+            if (s != 0)
+                x *= sprintSpeedMultiplier;
+
+            // Move force
+            rigBod.AddForce(Vector2.right * x * moveForce * Time.deltaTime, ForceMode2D.Force);
 
             // Jump
-            if (j > 0)
+            if (j > 0 && canJump)
             {
                 // Jump force
                 rigBod.AddForce(Vector3.up * jumpForceInitial, ForceMode2D.Impulse);
 
                 // Change state
                 ChangeState(State.airborn);
+                canJump = false;
             }
         }
         else if (playerState == State.airborn)
@@ -87,20 +108,35 @@ public class PlayerMove : MonoBehaviour
         }
         else if (playerState == State.groundSliding)
         {
+            // Apply force
+            rigBod.AddForce(Vector3.right * x * slideMoveForce);
 
-        }
-        else if (playerState == State.wallSlidingRight)
-        {
-            // Wall jump
-            if (j > 0)
+            if (j > 0 && canJump && canStand)
             {
-                // Add jump force
-                rigBod.velocity = jumpForceInitial * new Vector2(-1, 1);
+                // Jump force
+                rigBod.AddForce(Vector3.up * jumpForceInitial, ForceMode2D.Impulse);
 
                 // Change state
                 ChangeState(State.airborn);
+                canJump = false;
             }
-            // Wall slide (add extra gravity)
+        }
+        else if (playerState == State.wallSlidingRight)
+        {
+            // Walljump
+            if (j > 0 && canJump)
+            {
+                // Add jump force
+                // Reverse jump direction
+                Vector2 jump = wallJumpVelocity;
+                jump.x *= -1;
+                rigBod.velocity = jump;
+
+                // Change state
+                ChangeState(State.airborn);
+                canJump = false;
+            }
+            // Wallslide (add extra gravity)
             else
             {
                 rigBod.AddForce(Vector2.up * -extraGravity * Time.deltaTime, ForceMode2D.Force);
@@ -108,16 +144,17 @@ public class PlayerMove : MonoBehaviour
         }
         else if (playerState == State.wallSlidingLeft)
         {
-            // Wall jump
-            if (j > 0)
+            // Walljump
+            if (j > 0 && canJump)
             {
                 // Add jump force
-                rigBod.velocity = jumpForceInitial * new Vector2(1, 1);
+                rigBod.velocity = wallJumpVelocity;
 
                 // Change state
                 ChangeState(State.airborn);
+                canJump = false;
             }
-            // Wall slide (add extra gravity)
+            // Wallslide (add extra gravity)
             else
             {
                 rigBod.AddForce(Vector2.up * -extraGravity * Time.deltaTime, ForceMode2D.Force);
@@ -137,25 +174,32 @@ public class PlayerMove : MonoBehaviour
             // On the ground
             if (CheckArea(groundCheckA, groundCheckB))
             {
-                if (y >= 0)
+                // Grounded and walking
+                if (y >= 0 && canStand)
                 {
                     playerState = State.grounded;
                 }
+                // Grounded and sliding
                 else
                 {
                     playerState = State.groundSliding;
+
+                    if (CheckArea(crouchCheckA, crouchCheckB))
+                        canStand = false;
+                    else
+                        canStand = true;
                 }
             }
             // In the air
             else
             {
-                // Wallslide right
-                if ((CheckArea(wallCheckRA, wallCheckRB) && x > 0) || (playerState == State.wallSlidingRight && x !< 0))
+                // Wallslide right                          // Stick onto wall if given input or velocity above threhsold, and sustain if already started
+                if ((CheckArea(wallCheckRA, wallCheckRB) && (x > 0 || rigBod.velocity.x > 0.1f)) || (playerState == State.wallSlidingRight && x !< 0))
                 {
                     playerState = State.wallSlidingRight;
                 }
-                // Wallslide left
-                else if ((CheckArea(wallCheckLA, wallCheckLB) && x < 0) || (playerState == State.wallSlidingLeft && x !> 0))
+                // Wallslide left                                // Stick onto wall if given input or velocity above threhsold, and sustain if already started
+                else if ((CheckArea(wallCheckLA, wallCheckLB) && (x < 0 || rigBod.velocity.x < -0.1f)) || (playerState == State.wallSlidingLeft && x !> 0))
                 {
                     playerState = State.wallSlidingLeft;
                 }
@@ -164,18 +208,60 @@ public class PlayerMove : MonoBehaviour
                 {
                     playerState = State.airborn;
                 }
+
+                // Reset canStand in edge cases
+                canStand = true;
             }
         }
 
+        // Set player drag and airtime
+        // Airborn
         if (playerState == State.airborn)
         {
             rigBod.drag = airbornDrag;
         }
+        // Grounded
         else
         {
-            rigBod.drag = groundedDrag;
-            airtime = 0;
+            // Not sliding (increase friction)
+            if (playerState != State.groundSliding)
+            {
+                rigBod.drag = groundedDrag;
+                airtime = 0;
+            }
+            // Sliding (decrease friction)
+            else
+            {
+                rigBod.drag = airbornDrag;
+                airtime = 0;
+            }
         }
+
+        // Set player height based on current state
+        if (playerState == State.groundSliding)
+        {
+            if (!groundSliding)
+            {
+                capsuleCollider.size = new Vector2(0.95f, 0.95f);
+                capsuleCollider.offset = new Vector2(0, -0.525f);
+
+                groundSliding = true;
+            }
+        }
+        else
+        {
+            if (groundSliding)
+            {
+                capsuleCollider.size = new Vector2(1, 1.95f);
+                capsuleCollider.offset = new Vector2(0, -0.025f);
+
+                groundSliding = false;
+            }
+        }
+
+        // Reset canJump
+        if (j == 0)
+            canJump = true;
     }
 
     // Forces a specific state, usually from an outside source
@@ -229,6 +315,11 @@ public class PlayerMove : MonoBehaviour
             Gizmos.color = new Color(0, 0, 1, 0.5f);
             var leftWallCheck = GetCenterAndSize(wallCheckLA, wallCheckLB);
             Gizmos.DrawCube(leftWallCheck.Item1, leftWallCheck.Item2);
+
+            // Crouch check
+            Gizmos.color = new Color(0, 1f, 1f, 0.5f);
+            var crouchCheck = GetCenterAndSize(crouchCheckA, crouchCheckB);
+            Gizmos.DrawCube(crouchCheck.Item1, crouchCheck.Item2);
         }
     }
 
