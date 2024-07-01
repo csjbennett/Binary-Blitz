@@ -169,6 +169,7 @@ public class PlayerMove : MonoBehaviour
     // Updates state with given inputs (horizontal, vertical, jump)
     private void UpdateState(float x, float y, float j)
     {
+        // Cannot change state while on cooldown
         if (canChangeState)
         {
             // On the ground
