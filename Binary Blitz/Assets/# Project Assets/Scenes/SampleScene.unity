@@ -204,6 +204,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 17105424}
+  - {fileID: 475894668}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &193574264
@@ -551,6 +552,126 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1287844988}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &475894667
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 475894668}
+  - component: {fileID: 475894669}
+  m_Layer: 0
+  m_Name: Armor Changer (test)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &475894668
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 475894667}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 127714489}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &475894669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 475894667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ed70f5c1c9b70240a43d56fbec9fc34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  helmetMain: {fileID: 193574266}
+  helmetMainSprites:
+  - {fileID: 1215459329, guid: 20de1f8623977a84382589e6886b67e3, type: 3}
+  - {fileID: 881747247, guid: 20de1f8623977a84382589e6886b67e3, type: 3}
+  - {fileID: 1764312669, guid: 20de1f8623977a84382589e6886b67e3, type: 3}
+  - {fileID: -442315111, guid: 20de1f8623977a84382589e6886b67e3, type: 3}
+  - {fileID: -1557972058, guid: 20de1f8623977a84382589e6886b67e3, type: 3}
+  - {fileID: -1421066776, guid: 20de1f8623977a84382589e6886b67e3, type: 3}
+  - {fileID: 1183804688, guid: 20de1f8623977a84382589e6886b67e3, type: 3}
+  helmetVisor: {fileID: 795186847}
+  helmetVisorSprites:
+  - {fileID: 1688636087, guid: 20de1f8623977a84382589e6886b67e3, type: 3}
+  - {fileID: -808604017, guid: 20de1f8623977a84382589e6886b67e3, type: 3}
+  - {fileID: -1361831825, guid: 20de1f8623977a84382589e6886b67e3, type: 3}
+  - {fileID: -1225098731, guid: 20de1f8623977a84382589e6886b67e3, type: 3}
+  - {fileID: 1627537941, guid: 20de1f8623977a84382589e6886b67e3, type: 3}
+  - {fileID: 1748287933, guid: 20de1f8623977a84382589e6886b67e3, type: 3}
+  - {fileID: -1311163194, guid: 20de1f8623977a84382589e6886b67e3, type: 3}
+  torsoMain: {fileID: 832974743}
+  torsoMainSprites:
+  - {fileID: 1795563383, guid: 2d3e3ff042f427b44894e128a79fc822, type: 3}
+  - {fileID: -317562656, guid: 2d3e3ff042f427b44894e128a79fc822, type: 3}
+  - {fileID: -701063751, guid: 2d3e3ff042f427b44894e128a79fc822, type: 3}
+  - {fileID: 755138113, guid: 2d3e3ff042f427b44894e128a79fc822, type: 3}
+  - {fileID: 271177422, guid: 2d3e3ff042f427b44894e128a79fc822, type: 3}
+  - {fileID: -782784136, guid: 2d3e3ff042f427b44894e128a79fc822, type: 3}
+  - {fileID: -1019264658, guid: 2d3e3ff042f427b44894e128a79fc822, type: 3}
+  torsoAccent: {fileID: 603414881}
+  torsoAccentSprites:
+  - {fileID: 1202490788, guid: 2d3e3ff042f427b44894e128a79fc822, type: 3}
+  - {fileID: 1267706200, guid: 2d3e3ff042f427b44894e128a79fc822, type: 3}
+  - {fileID: 1144855784, guid: 2d3e3ff042f427b44894e128a79fc822, type: 3}
+  - {fileID: -637818189, guid: 2d3e3ff042f427b44894e128a79fc822, type: 3}
+  - {fileID: -1164798971, guid: 2d3e3ff042f427b44894e128a79fc822, type: 3}
+  - {fileID: -201070041, guid: 2d3e3ff042f427b44894e128a79fc822, type: 3}
+  - {fileID: 1932839787, guid: 2d3e3ff042f427b44894e128a79fc822, type: 3}
+  armUFMain: {fileID: 1695822144}
+  armUFMainSprites:
+  - {fileID: -1461161861, guid: 4d3ae796156a85c4d9164dfb2abbc433, type: 3}
+  - {fileID: 338840506, guid: 4d3ae796156a85c4d9164dfb2abbc433, type: 3}
+  - {fileID: 870192159, guid: 4d3ae796156a85c4d9164dfb2abbc433, type: 3}
+  armUFAccent: {fileID: 914835762}
+  armUFAccentSprites:
+  - {fileID: -131344341, guid: 4d3ae796156a85c4d9164dfb2abbc433, type: 3}
+  - {fileID: 966864389, guid: 4d3ae796156a85c4d9164dfb2abbc433, type: 3}
+  - {fileID: -1330334816, guid: 4d3ae796156a85c4d9164dfb2abbc433, type: 3}
+  armLFMain: {fileID: 553934420}
+  armLFMainSprites:
+  - {fileID: -353670730, guid: 4d3ae796156a85c4d9164dfb2abbc433, type: 3}
+  - {fileID: -367912164, guid: 4d3ae796156a85c4d9164dfb2abbc433, type: 3}
+  - {fileID: 919404294, guid: 4d3ae796156a85c4d9164dfb2abbc433, type: 3}
+  armLFAccent: {fileID: 1543857407}
+  armLFAccentSprites:
+  - {fileID: -1953651866, guid: 4d3ae796156a85c4d9164dfb2abbc433, type: 3}
+  - {fileID: 1797727070, guid: 4d3ae796156a85c4d9164dfb2abbc433, type: 3}
+  - {fileID: 707036237, guid: 4d3ae796156a85c4d9164dfb2abbc433, type: 3}
+  armURMain: {fileID: 1253256818}
+  armURMainSprites:
+  - {fileID: 1057193368, guid: 4d3ae796156a85c4d9164dfb2abbc433, type: 3}
+  - {fileID: -2047251424, guid: 4d3ae796156a85c4d9164dfb2abbc433, type: 3}
+  - {fileID: 2032786193, guid: 4d3ae796156a85c4d9164dfb2abbc433, type: 3}
+  armURAccent: {fileID: 1181368279}
+  armURAccentSprites:
+  - {fileID: 979646633, guid: 4d3ae796156a85c4d9164dfb2abbc433, type: 3}
+  - {fileID: 92243849, guid: 4d3ae796156a85c4d9164dfb2abbc433, type: 3}
+  - {fileID: -1545098830, guid: 4d3ae796156a85c4d9164dfb2abbc433, type: 3}
+  armLRMain: {fileID: 1662246372}
+  armLRMainSprites:
+  - {fileID: -1048784792, guid: 4d3ae796156a85c4d9164dfb2abbc433, type: 3}
+  - {fileID: -443266798, guid: 4d3ae796156a85c4d9164dfb2abbc433, type: 3}
+  - {fileID: 682087038, guid: 4d3ae796156a85c4d9164dfb2abbc433, type: 3}
+  armLRAccent: {fileID: 2143105962}
+  armLRAccentSprites:
+  - {fileID: -1466876924, guid: 4d3ae796156a85c4d9164dfb2abbc433, type: 3}
+  - {fileID: 1353386462, guid: 4d3ae796156a85c4d9164dfb2abbc433, type: 3}
+  - {fileID: -1219403533, guid: 4d3ae796156a85c4d9164dfb2abbc433, type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -776,7 +897,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c903c54a305dbe04c938d627fd42e791, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugMode: 1
+  debugMode: 0
   playerState: 0
   moveForce: 4000
   slideMoveForce: 1
@@ -1217,7 +1338,7 @@ GameObject:
   - component: {fileID: 795186846}
   - component: {fileID: 795186847}
   m_Layer: 0
-  m_Name: Helmet Accents
+  m_Name: Helmet Visor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
