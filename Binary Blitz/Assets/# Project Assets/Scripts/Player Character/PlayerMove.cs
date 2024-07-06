@@ -9,7 +9,7 @@ public class PlayerMove : MonoBehaviour
 
     [Header("Player State")]
     public State playerState = State.grounded;
-    public enum State { grounded, airborn, groundSliding, wallSlidingRight, wallSlidingLeft };
+    public enum State { grounded, airborn, clambering, groundSliding, wallSlidingRight, wallSlidingLeft };
 
     [Header("Movement Traits")]
     public float moveForce;
@@ -20,9 +20,11 @@ public class PlayerMove : MonoBehaviour
     public Vector2 wallJumpVelocity;
     public float groundedDrag = 2.5f;
     public float airbornDrag = 0;
+    public float minTimeUntilAdditionalJumpForces = 0.1f;
     public float jumpTime = 0.25f;
     private float airtime = 0f;
     public float extraGravity;
+    public float airbornManeuverability;
 
     [Header("Ground Check Layermask")]
     public LayerMask groundAndWallCheckLayers;
@@ -46,12 +48,23 @@ public class PlayerMove : MonoBehaviour
     public Vector2 crouchCheckA;
     public Vector2 crouchCheckB;
 
-    // Etc. private variables
+    // Misc. public variables
+    [HideInInspector]
+    public float xVel;
+
+    // Misc. variables variables
     private bool canJump = true;
     private bool canStand = true;
     private bool groundSliding = false;
     private Rigidbody2D rigBod;
     private CapsuleCollider2D capsuleCollider;
+    private float maxVel = 7.6f;
+
+    // Input variables
+    private float x = 0;
+    private float y = 0;
+    private float j = 0;
+    private float c = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -63,22 +76,27 @@ public class PlayerMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float x = Input.GetAxis("Horizontal");
-        float y = Input.GetAxis("Vertical");
-        float j = Input.GetAxis("Jump");
-        float s = Input.GetAxis("Sprint");
+        // Set public variables
+        xVel = rigBod.velocity.x;
 
-        UpdateState(x, y, j);
+        // Set private variables
+        x = Input.GetAxis("Horizontal");
+        y = Input.GetAxis("Vertical");
+        j = Input.GetAxis("Jump");
+        c = Input.GetAxis("Clamber");
 
+
+        // Update player state before performing movement actions
+        UpdateState();
+    }
+
+    // Apply movement physics
+    private void FixedUpdate()
+    {
         if (playerState == State.grounded)
         {
-            // Ground movement force
-            // Sprint
-            if (s != 0)
-                x *= sprintSpeedMultiplier;
-
             // Move force
-            rigBod.AddForce(Vector2.right * x * moveForce * Time.deltaTime, ForceMode2D.Force);
+            rigBod.AddForce(Vector2.right * x * moveForce * Time.fixedDeltaTime, ForceMode2D.Force);
 
             // Jump
             if (j > 0 && canJump)
@@ -96,20 +114,38 @@ public class PlayerMove : MonoBehaviour
             // Allows for short-hops and long-hops depending on how long jump key is held
             if (airtime < jumpTime)
             {
-                airtime += Time.deltaTime;
-                
-                // Sustain the jump force when button is held
-                if (j > 0)
-                    rigBod.AddForce(Vector3.up * jumpForceSustained * Time.deltaTime, ForceMode2D.Force);
+                airtime += Time.fixedDeltaTime;
+
+                if (airtime >= minTimeUntilAdditionalJumpForces)
+                {
+                    // Sustain the jump force when button is held
+                    if (j > 0)
+                        rigBod.AddForce(Vector3.up * jumpForceSustained * Time.fixedDeltaTime, ForceMode2D.Force);
+                    // Start fast-falling once jump button is released
+                    else
+                        airtime = jumpTime;
+
+                    // Airborn movement
+                    float xVel = Mathf.Abs(rigBod.velocity.x);
+                    if (xVel < maxVel)
+                        rigBod.AddForce(Vector3.right * x * airbornManeuverability * Time.fixedDeltaTime, ForceMode2D.Force);
+                }
             }
             // Apply extra gravity to make the player fall quicker
             else
-                rigBod.AddForce(Vector3.up * -extraGravity * Time.deltaTime, ForceMode2D.Force);
+                rigBod.AddForce(Vector3.up * -extraGravity * Time.fixedDeltaTime, ForceMode2D.Force);
+
+            rigBod.AddForce(Vector3.right * x);
         }
         else if (playerState == State.groundSliding)
         {
             // Apply force
             rigBod.AddForce(Vector3.right * x * slideMoveForce);
+
+            // Airborn movement
+            float xVel = Mathf.Abs(rigBod.velocity.x);
+            if (xVel < maxVel)
+                rigBod.AddForce(Vector3.right * x * airbornManeuverability * Time.fixedDeltaTime, ForceMode2D.Force);
 
             if (j > 0 && canJump && canStand)
             {
@@ -125,49 +161,32 @@ public class PlayerMove : MonoBehaviour
         {
             // Walljump
             if (j > 0 && canJump)
-            {
-                // Add jump force
-                // Reverse jump direction
-                Vector2 jump = wallJumpVelocity;
-                jump.x *= -1;
-                rigBod.velocity = jump;
-
-                // Change state
-                ChangeState(State.airborn);
-                canJump = false;
-            }
+                WalljumpToTheLeft();
             // Wallslide (add extra gravity)
             else
-            {
-                rigBod.AddForce(Vector2.up * -extraGravity * Time.deltaTime, ForceMode2D.Force);
-            }
+                rigBod.AddForce(Vector2.up * -extraGravity * Time.fixedDeltaTime, ForceMode2D.Force);
         }
         else if (playerState == State.wallSlidingLeft)
         {
             // Walljump
             if (j > 0 && canJump)
-            {
-                // Add jump force
-                rigBod.velocity = wallJumpVelocity;
-
-                // Change state
-                ChangeState(State.airborn);
-                canJump = false;
-            }
+                WalljumpToTheRight();
             // Wallslide (add extra gravity)
             else
-            {
-                rigBod.AddForce(Vector2.up * -extraGravity * Time.deltaTime, ForceMode2D.Force);
-            }
+                rigBod.AddForce(Vector2.up * -extraGravity * Time.fixedDeltaTime, ForceMode2D.Force);
+        }
+        else if (playerState == State.clambering)
+        {
+
         }
         else
             Debug.LogWarning("No valid state selected for player!");
     }
 
-    // State updates
+    // State updater
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    // Updates state with given inputs (horizontal, vertical, jump)
-    private void UpdateState(float x, float y, float j)
+    // Updates state based on wall checks and inputs (horizontal, vertical, jump)
+    private void UpdateState()
     {
         // Cannot change state while on cooldown
         if (canChangeState)
@@ -195,20 +214,39 @@ public class PlayerMove : MonoBehaviour
             else
             {
                 // Wallslide right                          // Stick onto wall if given input or velocity above threhsold, and sustain if already started
-                if ((CheckArea(wallCheckRA, wallCheckRB) && (x > 0 || rigBod.velocity.x > 0.1f)) || (playerState == State.wallSlidingRight && x !< 0))
+                if (CheckArea(wallCheckRA, wallCheckRB))
                 {
-                    playerState = State.wallSlidingRight;
+                    // Start wallslide
+                    if ((x > 0 || rigBod.velocity.x > 0.1f) || (playerState == State.wallSlidingRight && x! < 0))
+                        playerState = State.wallSlidingRight;
+                    else
+                        ChangeState(State.airborn);
+
+                    // Walljump
+                    if (j > 0 && canJump)
+                    {
+                        airtime = 0;
+                        WalljumpToTheLeft();
+                    }
                 }
                 // Wallslide left                                // Stick onto wall if given input or velocity above threhsold, and sustain if already started
-                else if ((CheckArea(wallCheckLA, wallCheckLB) && (x < 0 || rigBod.velocity.x < -0.1f)) || (playerState == State.wallSlidingLeft && x !> 0))
+                else if (CheckArea(wallCheckLA, wallCheckLB))
                 {
-                    playerState = State.wallSlidingLeft;
+                    // Start wallslide
+                    if ((x < 0 || rigBod.velocity.x < -0.1f) || (playerState == State.wallSlidingLeft && x! > 0))
+                        playerState = State.wallSlidingLeft;
+                    else
+                        ChangeState(State.airborn);
+
+                    if (j > 0 && canJump)
+                    {
+                        airtime = 0;
+                        WalljumpToTheRight();
+                    }
                 }
                 // Airborn (no wallslide)
                 else
-                {
                     playerState = State.airborn;
-                }
 
                 // Reset canStand in edge cases
                 canStand = true;
@@ -337,5 +375,26 @@ public class PlayerMove : MonoBehaviour
         Vector3 size = new Vector2(xSize, ySize);
 
         return (center, size);
+    }
+
+    // Walljumps
+    private void WalljumpToTheLeft()
+    {
+        // Add jump force                    Reverse jump direction
+        rigBod.velocity = wallJumpVelocity * new Vector2(-1, 1);
+
+        // Change state
+        ChangeState(State.airborn);
+        canJump = false;
+    }
+
+    private void WalljumpToTheRight()
+    {
+        // Add jump force
+        rigBod.velocity = wallJumpVelocity;
+
+        // Change state
+        ChangeState(State.airborn);
+        canJump = false;
     }
 }

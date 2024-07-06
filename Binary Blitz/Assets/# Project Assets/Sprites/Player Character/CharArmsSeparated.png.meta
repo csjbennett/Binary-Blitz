@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4d3ae796156a85c4d9164dfb2abbc433
+guid: 4f15f212e606e9e418dfdd1750c5eb9b
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -124,155 +124,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 983e6b062f93a9149a0333411364809a
-      internalID: -1461161861
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CharArmsURMain1
-      rect:
-        serializedVersion: 2
-        x: 10
-        y: 36
-        width: 6
-        height: 10
-      alignment: 9
-      pivot: {x: 0.5, y: 0.7}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 90f2b025da26621418c19034db5e39fe
-      internalID: 1057193368
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CharArmsLFMain1
-      rect:
-        serializedVersion: 2
-        x: 2
-        y: 26
-        width: 6
-        height: 9
-      alignment: 9
-      pivot: {x: 0.6666667, y: 0.8888889}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 51bd3ccc7231f2848ae75c1b829116dd
-      internalID: -353670730
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CharArmsLRMain1
-      rect:
-        serializedVersion: 2
-        x: 10
-        y: 26
-        width: 6
-        height: 9
-      alignment: 9
-      pivot: {x: 0.6666667, y: 0.8888889}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0a6e069da87365d4abd4719405ae5fd6
-      internalID: -1048784792
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CharArmsUFAccent1
-      rect:
-        serializedVersion: 2
-        x: 20
-        y: 36
-        width: 6
-        height: 10
-      alignment: 9
-      pivot: {x: 0.5, y: 0.7}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1cf08c11029aa824d88bcf29f904d32a
-      internalID: -131344341
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CharArmsURAccent1
-      rect:
-        serializedVersion: 2
-        x: 28
-        y: 36
-        width: 6
-        height: 10
-      alignment: 9
-      pivot: {x: 0.5, y: 0.7}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e1c8adfced4a51a4e8ccb6df7df98eed
-      internalID: 979646633
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CharArmsLFAccent1
-      rect:
-        serializedVersion: 2
-        x: 20
-        y: 26
-        width: 6
-        height: 9
-      alignment: 9
-      pivot: {x: 0.6666667, y: 0.8888889}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: eb3e799f00c04e24e84ad93f60ef94eb
-      internalID: -1953651866
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CharArmsLRAccent1
-      rect:
-        serializedVersion: 2
-        x: 28
-        y: 26
-        width: 6
-        height: 9
-      alignment: 9
-      pivot: {x: 0.6666667, y: 0.8888889}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c2ec46cde847b014e9a8bdd9089d6188
-      internalID: -1466876924
+      spriteID: 316153b0c9bafa54a8b4a20e8140b2cd
+      internalID: 207972921
       vertices: []
       indices: 
       edges: []
@@ -292,155 +145,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 25f14afe0860f004f9aa94f9320cd0bf
-      internalID: 338840506
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CharArmsURMain2
-      rect:
-        serializedVersion: 2
-        x: 46
-        y: 36
-        width: 6
-        height: 10
-      alignment: 9
-      pivot: {x: 0.5, y: 0.7}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f0b81a3c9fdee6345bdffb96bb2f251c
-      internalID: -2047251424
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CharArmsLFMain2
-      rect:
-        serializedVersion: 2
-        x: 38
-        y: 26
-        width: 6
-        height: 9
-      alignment: 9
-      pivot: {x: 0.6666667, y: 0.8888889}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 63e02c567a1afb040b098a68d60c1596
-      internalID: -367912164
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CharArmsLRMain2
-      rect:
-        serializedVersion: 2
-        x: 46
-        y: 26
-        width: 6
-        height: 9
-      alignment: 9
-      pivot: {x: 0.6666667, y: 0.8888889}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: abf42b69802385a4197e003c5dc900ec
-      internalID: -443266798
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CharArmsUFAccent2
-      rect:
-        serializedVersion: 2
-        x: 2
-        y: 12
-        width: 6
-        height: 10
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: be9ebb90ddba0e5499e8fc262f5537ef
-      internalID: 966864389
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CharArmsURAccent2
-      rect:
-        serializedVersion: 2
-        x: 10
-        y: 12
-        width: 6
-        height: 10
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8200f6483cb0b264194e4c9ff43dea96
-      internalID: 92243849
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CharArmsLFAccent2
-      rect:
-        serializedVersion: 2
-        x: 2
-        y: 2
-        width: 6
-        height: 9
-      alignment: 9
-      pivot: {x: 0.6666667, y: 0.8888889}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9b7aea6b10ad78449bd5ff167957538c
-      internalID: 1797727070
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CharArmsLRAccent2
-      rect:
-        serializedVersion: 2
-        x: 10
-        y: 2
-        width: 6
-        height: 9
-      alignment: 9
-      pivot: {x: 0.6666667, y: 0.8888889}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f8065645b70ca7e458990e4176078bdf
-      internalID: 1353386462
+      spriteID: 966c14521edb7bc40b3b0f075f83ea0b
+      internalID: -323855887
       vertices: []
       indices: 
       edges: []
@@ -460,29 +166,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 80e8c1f829dd7e647bc5fb06eddd8d05
-      internalID: 870192159
+      spriteID: d5c2dfb7146186f41b0027f0cfdd9a2b
+      internalID: -1651261463
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CharArmsLFMain3
+      name: CharArmsURMain1
       rect:
         serializedVersion: 2
-        x: 20
-        y: 2
+        x: 10
+        y: 36
         width: 6
-        height: 9
+        height: 10
       alignment: 9
-      pivot: {x: 0.6666667, y: 0.8888889}
+      pivot: {x: 0.5, y: 0.7}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: faf1e8cd581bd6a4da5f51701a52b1c8
-      internalID: 919404294
+      spriteID: 20bef097ee4e9c94d8937bd9f7f85b2e
+      internalID: -148760278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharArmsURMain2
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 36
+        width: 6
+        height: 10
+      alignment: 9
+      pivot: {x: 0.5, y: 0.7}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a21270817c2c0ea4ea8c2df15a829e66
+      internalID: -342400922
       vertices: []
       indices: 
       edges: []
@@ -502,8 +229,113 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a03d57095ac7d694b9586f8f1715a6bb
-      internalID: 2032786193
+      spriteID: 24c5f5811427e7449ade1d4b1cfbd5ea
+      internalID: -1540360897
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharArmsLFMain1
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 26
+        width: 6
+        height: 9
+      alignment: 9
+      pivot: {x: 0.6666667, y: 0.8888889}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd1df43f281e7ec449179669f99aa460
+      internalID: 379468272
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharArmsLFMain2
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 26
+        width: 6
+        height: 9
+      alignment: 9
+      pivot: {x: 0.6666667, y: 0.8888889}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4ecae72515175704db5acfa74c22c93b
+      internalID: -1872500792
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharArmsLFMain3
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 2
+        width: 6
+        height: 9
+      alignment: 9
+      pivot: {x: 0.6666667, y: 0.8888889}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c73e6d76b1db63c409975dd70482972d
+      internalID: -1826282497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharArmsLRMain1
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 26
+        width: 6
+        height: 9
+      alignment: 9
+      pivot: {x: 0.6666667, y: 0.8888889}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1755a97f3a8eaf046ba6437e7587d1eb
+      internalID: -923499609
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharArmsLRMain2
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 26
+        width: 6
+        height: 9
+      alignment: 9
+      pivot: {x: 0.6666667, y: 0.8888889}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb910bcff08599844b6d2235cfe034b4
+      internalID: -49683957
       vertices: []
       indices: 
       edges: []
@@ -523,8 +355,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3eb51cca280ec1d45adebc06aefa87d7
-      internalID: 682087038
+      spriteID: 2c5a9dcceb1c2924baf9908daa7f339c
+      internalID: -1713076327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharArmsUFAccent1
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 36
+        width: 6
+        height: 10
+      alignment: 9
+      pivot: {x: 0.5, y: 0.7}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eca9375e7dc206641af44b1ea181740c
+      internalID: 111924102
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharArmsUFAccent2
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 12
+        width: 6
+        height: 10
+      alignment: 9
+      pivot: {x: 0.5, y: 0.7}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c80cf08c290a124e88b653e79e39851
+      internalID: 1707540531
       vertices: []
       indices: 
       edges: []
@@ -544,8 +418,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 569eb891e493c30428e85a0ed8481eee
-      internalID: -1330334816
+      spriteID: 120877d6417f21542a8af55d293d4ac1
+      internalID: 695966473
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharArmsLFAccent1
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 26
+        width: 6
+        height: 9
+      alignment: 9
+      pivot: {x: 0.6666667, y: 0.8888889}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0fe6784addb89b9488b73905ea5d2702
+      internalID: -123467485
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharArmsLFAccent2
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 2
+        width: 6
+        height: 9
+      alignment: 9
+      pivot: {x: 0.6666667, y: 0.8888889}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 089dc3bce29b4544d8283a8b647a2abb
+      internalID: 1466071385
       vertices: []
       indices: 
       edges: []
@@ -565,8 +481,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6f37829cd79802b418d9cec53aedbb32
-      internalID: 707036237
+      spriteID: cfcecbd39e7d5a44b9cffc5aae26d9f8
+      internalID: 912089944
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharArmsURAccent1
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 36
+        width: 6
+        height: 10
+      alignment: 9
+      pivot: {x: 0.5, y: 0.7}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 00fdec1214c883443afe3a98873d4b6e
+      internalID: 1050079726
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharArmsURAccent2
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 12
+        width: 6
+        height: 10
+      alignment: 9
+      pivot: {x: 0.5, y: 0.7}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9ff7192f229f5fd4a8d632a058eddf7c
+      internalID: 42275352
       vertices: []
       indices: 
       edges: []
@@ -586,8 +544,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 77a8ee08b4c83aa40834debc2fe1717c
-      internalID: -1545098830
+      spriteID: 3f92ec6dfac3d3c4993fcff08bfdd1d0
+      internalID: 1835656117
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharArmsLRAccent1
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 26
+        width: 6
+        height: 9
+      alignment: 9
+      pivot: {x: 0.6666667, y: 0.8888889}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa850e3746cdb314ebd8dc9ca8090c6f
+      internalID: -1099931605
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharArmsLRAccent2
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 2
+        width: 6
+        height: 9
+      alignment: 9
+      pivot: {x: 0.6666667, y: 0.8888889}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6350bb1d656220e4698f3debef58cc91
+      internalID: -1913257160
       vertices: []
       indices: 
       edges: []
@@ -607,8 +607,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 23e270059395e594ca3e5d1bc8f48ae2
-      internalID: -1219403533
+      spriteID: 1aabe59aba2d60a4e9b73fe80f1a4b8d
+      internalID: -1909132704
       vertices: []
       indices: 
       edges: []
@@ -624,30 +624,30 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      CharArmsLFAccent1: -1953651866
-      CharArmsLFAccent2: 1797727070
-      CharArmsLFAccent3: 707036237
-      CharArmsLFMain1: -353670730
-      CharArmsLFMain2: -367912164
-      CharArmsLFMain3: 919404294
-      CharArmsLRAccent1: -1466876924
-      CharArmsLRAccent2: 1353386462
-      CharArmsLRAccent3: -1219403533
-      CharArmsLRMain1: -1048784792
-      CharArmsLRMain2: -443266798
-      CharArmsLRMain3: 682087038
-      CharArmsUFAccent1: -131344341
-      CharArmsUFAccent2: 966864389
-      CharArmsUFAccent3: -1330334816
-      CharArmsUFMain1: -1461161861
-      CharArmsUFMain2: 338840506
-      CharArmsUFMain3: 870192159
-      CharArmsURAccent1: 979646633
-      CharArmsURAccent2: 92243849
-      CharArmsURAccent3: -1545098830
-      CharArmsURMain1: 1057193368
-      CharArmsURMain2: -2047251424
-      CharArmsURMain3: 2032786193
+      CharArmsLFAccent1: -123467485
+      CharArmsLFAccent2: 1466071385
+      CharArmsLFAccent3: 912089944
+      CharArmsLFMain1: 379468272
+      CharArmsLFMain2: -1872500792
+      CharArmsLFMain3: -1826282497
+      CharArmsLRAccent1: -1099931605
+      CharArmsLRAccent2: -1913257160
+      CharArmsLRAccent3: -1909132704
+      CharArmsLRMain1: -923499609
+      CharArmsLRMain2: -49683957
+      CharArmsLRMain3: -1713076327
+      CharArmsUFAccent1: 111924102
+      CharArmsUFAccent2: 1707540531
+      CharArmsUFAccent3: 695966473
+      CharArmsUFMain1: 207972921
+      CharArmsUFMain2: -323855887
+      CharArmsUFMain3: -1651261463
+      CharArmsURAccent1: 1050079726
+      CharArmsURAccent2: 42275352
+      CharArmsURAccent3: 1835656117
+      CharArmsURMain1: -148760278
+      CharArmsURMain2: -342400922
+      CharArmsURMain3: -1540360897
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
