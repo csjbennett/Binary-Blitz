@@ -899,8 +899,7 @@ MonoBehaviour:
   debugMode: 1
   playerState: 0
   moveForce: 5000
-  slideMoveForce: 1
-  sprintSpeedMultiplier: 1.5
+  clamberReach: 0
   jumpForceInitial: 6.75
   jumpForceSustained: 1200
   wallJumpVelocity: {x: 5, y: 5}
@@ -914,8 +913,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   stateChangeCooldown: 0.15
-  groundCheckA: {x: -0.25, y: -1}
-  groundCheckB: {x: 0.25, y: -1.0125}
+  groundCheckA: {x: -0.15, y: -1}
+  groundCheckB: {x: 0.15, y: -1.0125}
   wallCheckRA: {x: 0.375, y: 0.5}
   wallCheckRB: {x: 0.4, y: -0.5}
   wallCheckLA: {x: -0.375, y: 0.5}

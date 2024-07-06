@@ -52,12 +52,23 @@ public class PlayerMove : MonoBehaviour
     public float xVel;
 
     // Misc. variables variables
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`
+    // Movement variables
     private bool canJump = true;
     private bool canStand = true;
     private bool groundSliding = false;
+
+    // Physics
     private Rigidbody2D rigBod;
     private CapsuleCollider2D capsuleCollider;
-    private float maxVel = 7.6f;
+    private float maxAirbornOrSlidingVel = 7.6f;
+    // Collider stuff
+    private Vector2 standingColSize = new Vector2(0.75f, 1.85f);
+    private Vector2 standingColOffset = new Vector2(0, -0.075f);
+    private Vector2 slidingColSize = new Vector2(0.75f, 0.95f);
+    private Vector2 slidingColOffset = new Vector2(0, -0.525f);
+    // Clamber stuff
+    private Vector2 clamberTarget = Vector2.zero;
 
     // Input variables
     private float x = 0;
@@ -125,7 +136,7 @@ public class PlayerMove : MonoBehaviour
 
                     // Airborn movement
                     float xVel = Mathf.Abs(rigBod.velocity.x);
-                    if (xVel < maxVel)
+                    if (xVel < maxAirbornOrSlidingVel)
                         rigBod.AddForce(Vector3.right * x * airbornManeuverability * Time.fixedDeltaTime, ForceMode2D.Force);
                 }
             }
@@ -139,7 +150,7 @@ public class PlayerMove : MonoBehaviour
         {
             // Airborn movement
             float xVel = Mathf.Abs(rigBod.velocity.x);
-            if (xVel < maxVel)
+            if (xVel < maxAirbornOrSlidingVel)
                 rigBod.AddForce(Vector3.right * x * airbornManeuverability * Time.fixedDeltaTime, ForceMode2D.Force);
 
             if (j > 0 && canJump && canStand)
@@ -186,7 +197,7 @@ public class PlayerMove : MonoBehaviour
         // Cannot change state while on cooldown
         if (canChangeState)
         {
-            // On the ground
+            // On the ground ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             if (CheckArea(groundCheckA, groundCheckB))
             {
                 // Grounded and walking
@@ -208,15 +219,22 @@ public class PlayerMove : MonoBehaviour
             // In the air
             else
             {
-                // Wallslide right                          // Stick onto wall if given input or velocity above threhsold, and sustain if already started
+                // Wallslide right ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                 if (CheckArea(wallCheckRA, wallCheckRB))
                 {
                     // Start clamber
                     if (c > 0)
                     {
+                        var clamberCheck = CanClamber(ClamberDirection.right);
 
+                        if (clamberCheck.canClamber)
+                        {
+                            float xTargetPos = clamberCheck.wallPos.x + (standingColSize.x / 2f);
+                            float yTargetPos = clamberCheck.floorPos.y + (standingColSize.y / 2f);
+                            clamberTarget = new Vector2(xTargetPos, yTargetPos);
 
-                        return;
+                            return;
+                        }
                     }
 
                     // Start wallslide
@@ -232,15 +250,22 @@ public class PlayerMove : MonoBehaviour
                         WalljumpToTheLeft();
                     }
                 }
-                // Wallslide left                                // Stick onto wall if given input or velocity above threhsold, and sustain if already started
+                // Wallslide left ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                 else if (CheckArea(wallCheckLA, wallCheckLB))
                 {
                     // Start clamber
                     if (c > 0)
                     {
+                        var clamberCheck = CanClamber(ClamberDirection.left);
 
+                        if (clamberCheck.canClamber)
+                        {
+                            float xTargetPos = clamberCheck.wallPos.x - (standingColSize.x / 2f);
+                            float yTargetPos = clamberCheck.floorPos.y + (standingColSize.y / 2f);
+                            clamberTarget = new Vector2(xTargetPos, yTargetPos);
 
-                        return;
+                            return;
+                        }
                     }
 
                     // Start wallslide
@@ -255,7 +280,7 @@ public class PlayerMove : MonoBehaviour
                         WalljumpToTheRight();
                     }
                 }
-                // Airborn (no wallslide)
+                // Airborn (no wallslide) ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                 else
                     playerState = State.airborn;
 
@@ -287,23 +312,25 @@ public class PlayerMove : MonoBehaviour
             }
         }
 
-        // Set player height based on current state
+        // Set collider size and offset based on current state
         if (playerState == State.groundSliding)
         {
+            // Start groundslide
             if (!groundSliding)
             {
-                capsuleCollider.size = new Vector2(0.95f, 0.95f);
-                capsuleCollider.offset = new Vector2(0, -0.525f);
+                capsuleCollider.size = slidingColSize;
+                capsuleCollider.offset = slidingColOffset;
 
                 groundSliding = true;
             }
         }
         else
         {
+            // Stop groundslide
             if (groundSliding)
             {
-                capsuleCollider.size = new Vector2(1, 1.95f);
-                capsuleCollider.offset = new Vector2(0, -0.025f);
+                capsuleCollider.size = standingColSize;
+                capsuleCollider.offset = standingColOffset;
 
                 groundSliding = false;
             }
@@ -410,20 +437,24 @@ public class PlayerMove : MonoBehaviour
     }
 
     // Clamber functions / class
-    private void ClamberToTheLeft()
+    private void StartClamber()
     {
-
+        rigBod.gravityScale = 0;
+        capsuleCollider.size = slidingColSize;
+        capsuleCollider.offset = Vector2.zero;
     }
 
-    private void ClamberToTheRight()
+    private void StopClamber()
     {
-
+        rigBod.gravityScale = 1;
+        capsuleCollider.size = standingColSize;
+        capsuleCollider.offset = standingColOffset;
     }
 
     private enum ClamberDirection { right, left };
-    private ClamberPacket CanClamber(ClamberDirection direction)
+    private ClamberCheck CanClamber(ClamberDirection direction)
     {
-        var clamberPacket = new ClamberPacket();
+        var clamberPacket = new ClamberCheck();
 
         if (direction == ClamberDirection.right)
         {
@@ -432,15 +463,15 @@ public class PlayerMove : MonoBehaviour
         else // direction == ClamberDirection.left
         {
 
-        }
+        }        
 
         return clamberPacket;
     }
 
-    public class ClamberPacket
+    public class ClamberCheck
     {
-        bool canClamber;
-        Vector2 wallPos;
-        Vector2 floorPos;
+        public bool canClamber = false;
+        public Vector2 wallPos = Vector2.zero;
+        public Vector2 floorPos = Vector2.zero;
     }
 }
