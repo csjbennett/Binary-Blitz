@@ -13,8 +13,7 @@ public class PlayerMove : MonoBehaviour
 
     [Header("Movement Traits")]
     public float moveForce;
-    public float slideMoveForce;
-    public float sprintSpeedMultiplier;
+    public float clamberReach;
     public float jumpForceInitial;
     public float jumpForceSustained;
     public Vector2 wallJumpVelocity;
@@ -28,7 +27,7 @@ public class PlayerMove : MonoBehaviour
 
     [Header("Ground Check Layermask")]
     public LayerMask groundAndWallCheckLayers;
-    
+
     // Prevents state from changing (prevents double jumps/glitches)
     public float stateChangeCooldown = 0.1f;
     private bool canChangeState = true;
@@ -85,7 +84,6 @@ public class PlayerMove : MonoBehaviour
         j = Input.GetAxis("Jump");
         c = Input.GetAxis("Clamber");
 
-
         // Update player state before performing movement actions
         UpdateState();
     }
@@ -139,9 +137,6 @@ public class PlayerMove : MonoBehaviour
         }
         else if (playerState == State.groundSliding)
         {
-            // Apply force
-            rigBod.AddForce(Vector3.right * x * slideMoveForce);
-
             // Airborn movement
             float xVel = Mathf.Abs(rigBod.velocity.x);
             if (xVel < maxVel)
@@ -216,6 +211,14 @@ public class PlayerMove : MonoBehaviour
                 // Wallslide right                          // Stick onto wall if given input or velocity above threhsold, and sustain if already started
                 if (CheckArea(wallCheckRA, wallCheckRB))
                 {
+                    // Start clamber
+                    if (c > 0)
+                    {
+
+
+                        return;
+                    }
+
                     // Start wallslide
                     if ((x > 0 || rigBod.velocity.x > 0.1f) || (playerState == State.wallSlidingRight && x! < 0))
                         playerState = State.wallSlidingRight;
@@ -232,6 +235,14 @@ public class PlayerMove : MonoBehaviour
                 // Wallslide left                                // Stick onto wall if given input or velocity above threhsold, and sustain if already started
                 else if (CheckArea(wallCheckLA, wallCheckLB))
                 {
+                    // Start clamber
+                    if (c > 0)
+                    {
+
+
+                        return;
+                    }
+
                     // Start wallslide
                     if ((x < 0 || rigBod.velocity.x < -0.1f) || (playerState == State.wallSlidingLeft && x! > 0))
                         playerState = State.wallSlidingLeft;
@@ -377,7 +388,7 @@ public class PlayerMove : MonoBehaviour
         return (center, size);
     }
 
-    // Walljumps
+    // Walljump functions
     private void WalljumpToTheLeft()
     {
         // Add jump force                    Reverse jump direction
@@ -396,5 +407,40 @@ public class PlayerMove : MonoBehaviour
         // Change state
         ChangeState(State.airborn);
         canJump = false;
+    }
+
+    // Clamber functions / class
+    private void ClamberToTheLeft()
+    {
+
+    }
+
+    private void ClamberToTheRight()
+    {
+
+    }
+
+    private enum ClamberDirection { right, left };
+    private ClamberPacket CanClamber(ClamberDirection direction)
+    {
+        var clamberPacket = new ClamberPacket();
+
+        if (direction == ClamberDirection.right)
+        {
+
+        }
+        else // direction == ClamberDirection.left
+        {
+
+        }
+
+        return clamberPacket;
+    }
+
+    public class ClamberPacket
+    {
+        bool canClamber;
+        Vector2 wallPos;
+        Vector2 floorPos;
     }
 }
