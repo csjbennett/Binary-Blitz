@@ -1158,10 +1158,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debugMode: 1
   playerState: 0
+  playerDirection: 0
   moveForce: 5000
-  clamberReach: 0
+  moveForceMod: 1
+  clamberReach: 0.75
+  clamberSpeed: 7.5
+  clamberSpeedMod: 1
   jumpForceInitial: 6.75
   jumpForceSustained: 1200
+  jumpForceMod: 1
   wallJumpVelocity: {x: 5, y: 5}
   groundedDrag: 15
   airbornDrag: 0
@@ -1169,6 +1174,7 @@ MonoBehaviour:
   jumpTime: 0.2
   extraGravity: 250
   airbornManeuverability: 250
+  airbornManeuverabilityMod: 1
   groundAndWallCheckLayers:
     serializedVersion: 2
     m_Bits: 8
@@ -1179,8 +1185,8 @@ MonoBehaviour:
   wallCheckRB: {x: 0.4, y: -0.5}
   wallCheckLA: {x: -0.375, y: 0.5}
   wallCheckLB: {x: -0.4, y: -0.5}
-  crouchCheckA: {x: 0.3725, y: 0.875}
-  crouchCheckB: {x: -0.3725, y: 0}
+  crouchCheckA: {x: 0.3625, y: 0.85625}
+  crouchCheckB: {x: -0.3625, y: 0}
   xVel: 0
 --- !u!50 &572393175
 Rigidbody2D:
