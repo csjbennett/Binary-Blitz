@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 20de1f8623977a84382589e6886b67e3
+guid: 75eb7c0136a0de142941939ff4c36564
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,7 +110,91 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: CharHelmet1Main
+      name: CharHelmet1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7a326fa828611554ca677b8ded67a286
+      internalID: 2070369067
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharVisor1
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc89c57d7848a8344a089a17e72cb8ea
+      internalID: 1437614081
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharHelmet2
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a9cb4198b628ebe4da0d719ddaf52a37
+      internalID: 1856291333
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharVisor2
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e502a1859d03f3546982b45c6dab70b2
+      internalID: 1748067735
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharHelmet3
       rect:
         serializedVersion: 2
         x: 0
@@ -124,14 +208,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d230ac0b37e7c424e8c846f1dc4a5e92
-      internalID: 1215459329
+      spriteID: af89d5e41f93a2144854976b2daa4ecb
+      internalID: -1086707883
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CharHelmet1Visor
+      name: CharVisor3
       rect:
         serializedVersion: 2
         x: 16
@@ -145,14 +229,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7a31693633a7c5544839ab17b0a8be29
-      internalID: 1688636087
+      spriteID: 44f24c51ce3107c4283df3d20f00b05c
+      internalID: -1841110526
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CharHelmet2Main
+      name: CharHelmet4
       rect:
         serializedVersion: 2
         x: 32
@@ -166,14 +250,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3682889358317bb41866b53b07ab6c3a
-      internalID: 881747247
+      spriteID: 1a1d5bfafa29a6247892bac2fc2eca4b
+      internalID: 1992301494
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CharHelmet2Visor
+      name: CharVisor4
       rect:
         serializedVersion: 2
         x: 48
@@ -187,14 +271,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2f33490a612fc6446995d6d0d7e21fba
-      internalID: -808604017
+      spriteID: 020d929cb8e6d2a44b989035b8e27323
+      internalID: -128234668
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CharHelmet3Main
+      name: CharHelmet5
       rect:
         serializedVersion: 2
         x: 0
@@ -208,14 +292,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4343f62703abd6c418ed9527c9e8c524
-      internalID: 1764312669
+      spriteID: 680d55c8a7a3df749922d5a8986838e5
+      internalID: -674139760
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CharHelmet3Visor
+      name: CharVisor5
       rect:
         serializedVersion: 2
         x: 16
@@ -229,14 +313,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0e882cc3838543441bb27b0cadb0211e
-      internalID: -1361831825
+      spriteID: a510d5b843cce7343af7a2512f3422e0
+      internalID: -1323045861
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CharHelmet4Main
+      name: CharHelmet6
       rect:
         serializedVersion: 2
         x: 32
@@ -250,14 +334,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bd417e342683c0349933534495f27975
-      internalID: -442315111
+      spriteID: 4839e4a773ed44f4ca917f0f111b531e
+      internalID: 931013022
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CharHelmet4Visor
+      name: CharVisor6
       rect:
         serializedVersion: 2
         x: 48
@@ -271,14 +355,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d89088c890114504cb2867859f70fb0d
-      internalID: -1225098731
+      spriteID: 04172f8cf228c5e45b7354f579cd812b
+      internalID: 1764579593
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CharHelmet5Main
+      name: CharHelmet7
       rect:
         serializedVersion: 2
         x: 0
@@ -292,14 +376,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ce856b0db3c18904a9bc2af1b2055ea2
-      internalID: -1557972058
+      spriteID: d3ea11057ea68d341964f51ccf296495
+      internalID: 302387447
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CharHelmet5Visor
+      name: CharVisor7
       rect:
         serializedVersion: 2
         x: 16
@@ -313,14 +397,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 96decb02bd34f4d4d929086aab70b968
-      internalID: 1627537941
+      spriteID: d984b03831c88ed498c49fefbb200874
+      internalID: -1128001068
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CharHelmet6Main
+      name: CharHelmet8
       rect:
         serializedVersion: 2
         x: 32
@@ -334,14 +418,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2efd26cfb4d54b44791365c8a8f1417d
-      internalID: -1421066776
+      spriteID: 8895d95f35080a643a5223b712accd47
+      internalID: -2117736051
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CharHelmet6Visor
+      name: CharVisor8
       rect:
         serializedVersion: 2
         x: 48
@@ -355,14 +439,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d3c939d3b36ef4e439ba730c8a3b6169
-      internalID: 1748287933
+      spriteID: 331f52e86b9b2714fac9c27bb2f51b9a
+      internalID: -1484743119
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CharHelmet7Main
+      name: CharHelmet9
       rect:
         serializedVersion: 2
         x: 0
@@ -376,14 +460,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d861f60b43fa41943b8f3cc925a48fb5
-      internalID: 1183804688
+      spriteID: 543f7a6323b05244283456d8dbcc5b84
+      internalID: -1131327828
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CharHelmet7Visor
+      name: CharVisor9
       rect:
         serializedVersion: 2
         x: 16
@@ -397,8 +481,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d5345bf41200615489ff687c6e74d805
-      internalID: -1311163194
+      spriteID: 6787e36e5aa6f5345873886540dc862c
+      internalID: -698809898
       vertices: []
       indices: 
       edges: []
@@ -414,20 +498,24 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      CharHelmet1Main: 1215459329
-      CharHelmet1Visor: 1688636087
-      CharHelmet2Main: 881747247
-      CharHelmet2Visor: -808604017
-      CharHelmet3Main: 1764312669
-      CharHelmet3Visor: -1361831825
-      CharHelmet4Main: -442315111
-      CharHelmet4Visor: -1225098731
-      CharHelmet5Main: -1557972058
-      CharHelmet5Visor: 1627537941
-      CharHelmet6Main: -1421066776
-      CharHelmet6Visor: 1748287933
-      CharHelmet7Main: 1183804688
-      CharHelmet7Visor: -1311163194
+      CharHelmet1: 2070369067
+      CharHelmet2: 1856291333
+      CharHelmet3: -1086707883
+      CharHelmet4: 1992301494
+      CharHelmet5: -674139760
+      CharHelmet6: 931013022
+      CharHelmet7: 302387447
+      CharHelmet8: -2117736051
+      CharHelmet9: -1131327828
+      CharVisor1: 1437614081
+      CharVisor2: 1748067735
+      CharVisor3: -1841110526
+      CharVisor4: -128234668
+      CharVisor5: -1323045861
+      CharVisor6: 1764579593
+      CharVisor7: -1128001068
+      CharVisor8: -1484743119
+      CharVisor9: -698809898
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

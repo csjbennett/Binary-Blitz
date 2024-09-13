@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class ArmorSwitcher : MonoBehaviour
 {
+    public Color armorColor;
+    public Color visorColor;
+
     [Header("Helmet")]
     public SpriteRenderer helmetMain;
     public Sprite[] helmetMainSprites;
@@ -38,6 +41,9 @@ public class ArmorSwitcher : MonoBehaviour
     public SpriteRenderer armLRAccent;
     public Sprite[] armLRAccentSprites;
 
+    [Header("Legs")]
+    public SpriteRenderer legsMain;
+
     private int armNum = 0;
 
     // Update is called once per frame
@@ -71,5 +77,14 @@ public class ArmorSwitcher : MonoBehaviour
             armLRMain.sprite = armLRMainSprites[armNum];
             armLRAccent.sprite = armLRAccentSprites[armNum];
         }
+
+        helmetMain.color = armorColor;
+        helmetVisor.color = visorColor;
+        torsoMain.color = armorColor;
+        armUFMain.color = armorColor;
+        armLFMain.color = armorColor;
+        armURMain.color = armorColor;
+        armLRMain.color = armorColor;
+        legsMain.color = armorColor;
     }
 }

@@ -236,7 +236,7 @@ public class PlayerMove : MonoBehaviour
         {
             // Ground-independent state checks ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-            // Start clamber
+            // Start clamber, canno begin clamber while ground sliding
             if (c > 0 && CanClamber())
                 return;
 
