@@ -6,6 +6,7 @@ using UnityEngine.Events;
 // Event called with a delay
 public class DelayedEvent : MonoBehaviour
 {
+    public string eventDescription;
     public bool triggerOnce = true;
     public UnityEvent onDelayComplete;
 

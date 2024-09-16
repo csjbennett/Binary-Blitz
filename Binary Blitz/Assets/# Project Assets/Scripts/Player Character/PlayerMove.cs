@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerMove : MonoBehaviour
 {
@@ -89,6 +90,10 @@ public class PlayerMove : MonoBehaviour
     private float y = 0;
     private float j = 0;
     private float c = 0;
+
+    // State change event
+    [HideInInspector]
+    public UnityEvent onStateChange;
 
     // Start is called before the first frame update
     void Start()
@@ -246,12 +251,12 @@ public class PlayerMove : MonoBehaviour
                 // Grounded and walking
                 if (y >= 0 && canStand)
                 {
-                    playerState = State.grounded;
+                    ChangeState(State.grounded);
                 }
                 // Grounded and sliding
                 else
                 {
-                    playerState = State.groundSliding;
+                    ChangeState(State.groundSliding);
 
                     if (CheckAreaRelative(crouchCheckA, crouchCheckB))
                         canStand = false;
@@ -271,7 +276,7 @@ public class PlayerMove : MonoBehaviour
 
                     // Start wallslide
                     if ((x > 0 || rigBod.velocity.x > 0.1f) || (playerState == State.wallSlidingRight && x! < 0))
-                        playerState = State.wallSlidingRight;
+                        ChangeState(State.wallSlidingRight);
                     else
                     {
                         ChangeState(State.airborn);
@@ -294,7 +299,7 @@ public class PlayerMove : MonoBehaviour
 
                     // Start wallslide
                     if ((x < 0 || rigBod.velocity.x < -0.1f) || (playerState == State.wallSlidingLeft && x! > 0))
-                        playerState = State.wallSlidingLeft;
+                        ChangeState(State.wallSlidingLeft);
                     else
                     {
                         ChangeState(State.airborn);
@@ -310,7 +315,7 @@ public class PlayerMove : MonoBehaviour
                 // Airborn (no wallslide) ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                 else
                 {
-                    playerState = State.airborn;
+                    ChangeState(State.airborn);
                     canChangeDirection = true;
                 }
 
@@ -375,6 +380,7 @@ public class PlayerMove : MonoBehaviour
     public void ChangeState(State newState)
     {
         playerState = newState;
+        onStateChange.Invoke();
 
         StartStateCooldown();
     }
@@ -478,7 +484,9 @@ public class PlayerMove : MonoBehaviour
         rigBod.drag = groundedDrag;
         capsuleCollider.size = slidingColSize;
         capsuleCollider.offset = Vector2.zero;
+        // State must be manually changed here to prevent state changes from occurring while clambering
         playerState = State.clambering;
+        onStateChange.Invoke();
         canChangeState = false;
         canChangeDirection = false;
     }

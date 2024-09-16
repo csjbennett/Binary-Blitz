@@ -6,6 +6,7 @@ using UnityEngine.Events;
 // Event called by the press of a key
 public class KeyPressEvent : MonoBehaviour
 {
+    public string eventDescription;
     public KeyCode[] eventKeys;
     public bool triggerOnce = true;
     public UnityEvent onKeyPressed;
