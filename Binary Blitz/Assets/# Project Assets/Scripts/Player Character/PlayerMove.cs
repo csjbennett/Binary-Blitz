@@ -593,4 +593,22 @@ public class PlayerMove : MonoBehaviour
     // Allows other scripts to check if player can change direction
     public bool CanChangeDirection()
     { return canChangeDirection; }
+
+    // Input getters
+    public float GetX()
+    {
+        return x;
+    }
+    public float GetY()
+    {
+        return y;
+    }
+    public float GetJ()
+    {
+        return j;
+    }
+    public float GetC()
+    {
+        return c;
+    }
 }

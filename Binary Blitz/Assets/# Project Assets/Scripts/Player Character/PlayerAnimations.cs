@@ -9,7 +9,8 @@ public class PlayerAnimations : MonoBehaviour
     public Animator legAnm;
 
     private bool canWalk = true;
-    private bool running = false;
+    private bool isWalking = false;
+    private bool isRunning = false;
 
     private Vector3 rightFacing = new Vector3(0, 0, 0);
     private Vector3 leftFacing = new Vector3(0, 180, 0);
@@ -38,7 +39,8 @@ public class PlayerAnimations : MonoBehaviour
         else
         {
             canWalk = false;
-            running = false;
+            isWalking = false;
+            isRunning = false;
         }
         
         if (player.playerState == PlayerMove.State.airborn)

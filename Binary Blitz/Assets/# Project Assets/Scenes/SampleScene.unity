@@ -834,44 +834,44 @@ MonoBehaviour:
   - {fileID: 1932839787, guid: 2d3e3ff042f427b44894e128a79fc822, type: 3}
   armUFMain: {fileID: 1695822144}
   armUFMainSprites:
-  - {fileID: -1461161861, guid: 4d3ae796156a85c4d9164dfb2abbc433, type: 3}
-  - {fileID: 338840506, guid: 4d3ae796156a85c4d9164dfb2abbc433, type: 3}
-  - {fileID: 870192159, guid: 4d3ae796156a85c4d9164dfb2abbc433, type: 3}
+  - {fileID: 207972921, guid: 4f15f212e606e9e418dfdd1750c5eb9b, type: 3}
+  - {fileID: -323855887, guid: 4f15f212e606e9e418dfdd1750c5eb9b, type: 3}
+  - {fileID: -1651261463, guid: 4f15f212e606e9e418dfdd1750c5eb9b, type: 3}
   armUFAccent: {fileID: 914835762}
   armUFAccentSprites:
-  - {fileID: -131344341, guid: 4d3ae796156a85c4d9164dfb2abbc433, type: 3}
-  - {fileID: 966864389, guid: 4d3ae796156a85c4d9164dfb2abbc433, type: 3}
-  - {fileID: -1330334816, guid: 4d3ae796156a85c4d9164dfb2abbc433, type: 3}
+  - {fileID: 111924102, guid: 4f15f212e606e9e418dfdd1750c5eb9b, type: 3}
+  - {fileID: 1707540531, guid: 4f15f212e606e9e418dfdd1750c5eb9b, type: 3}
+  - {fileID: 695966473, guid: 4f15f212e606e9e418dfdd1750c5eb9b, type: 3}
   armLFMain: {fileID: 553934420}
   armLFMainSprites:
-  - {fileID: -353670730, guid: 4d3ae796156a85c4d9164dfb2abbc433, type: 3}
-  - {fileID: -367912164, guid: 4d3ae796156a85c4d9164dfb2abbc433, type: 3}
-  - {fileID: 919404294, guid: 4d3ae796156a85c4d9164dfb2abbc433, type: 3}
+  - {fileID: 379468272, guid: 4f15f212e606e9e418dfdd1750c5eb9b, type: 3}
+  - {fileID: -1872500792, guid: 4f15f212e606e9e418dfdd1750c5eb9b, type: 3}
+  - {fileID: -1826282497, guid: 4f15f212e606e9e418dfdd1750c5eb9b, type: 3}
   armLFAccent: {fileID: 1543857407}
   armLFAccentSprites:
-  - {fileID: -1953651866, guid: 4d3ae796156a85c4d9164dfb2abbc433, type: 3}
-  - {fileID: 1797727070, guid: 4d3ae796156a85c4d9164dfb2abbc433, type: 3}
-  - {fileID: 707036237, guid: 4d3ae796156a85c4d9164dfb2abbc433, type: 3}
+  - {fileID: -123467485, guid: 4f15f212e606e9e418dfdd1750c5eb9b, type: 3}
+  - {fileID: 1466071385, guid: 4f15f212e606e9e418dfdd1750c5eb9b, type: 3}
+  - {fileID: 912089944, guid: 4f15f212e606e9e418dfdd1750c5eb9b, type: 3}
   armURMain: {fileID: 1253256818}
   armURMainSprites:
-  - {fileID: 1057193368, guid: 4d3ae796156a85c4d9164dfb2abbc433, type: 3}
-  - {fileID: -2047251424, guid: 4d3ae796156a85c4d9164dfb2abbc433, type: 3}
-  - {fileID: 2032786193, guid: 4d3ae796156a85c4d9164dfb2abbc433, type: 3}
+  - {fileID: -148760278, guid: 4f15f212e606e9e418dfdd1750c5eb9b, type: 3}
+  - {fileID: -342400922, guid: 4f15f212e606e9e418dfdd1750c5eb9b, type: 3}
+  - {fileID: -1540360897, guid: 4f15f212e606e9e418dfdd1750c5eb9b, type: 3}
   armURAccent: {fileID: 1181368279}
   armURAccentSprites:
-  - {fileID: 979646633, guid: 4d3ae796156a85c4d9164dfb2abbc433, type: 3}
-  - {fileID: 92243849, guid: 4d3ae796156a85c4d9164dfb2abbc433, type: 3}
-  - {fileID: -1545098830, guid: 4d3ae796156a85c4d9164dfb2abbc433, type: 3}
+  - {fileID: 1050079726, guid: 4f15f212e606e9e418dfdd1750c5eb9b, type: 3}
+  - {fileID: 42275352, guid: 4f15f212e606e9e418dfdd1750c5eb9b, type: 3}
+  - {fileID: 1835656117, guid: 4f15f212e606e9e418dfdd1750c5eb9b, type: 3}
   armLRMain: {fileID: 1662246372}
   armLRMainSprites:
-  - {fileID: -1048784792, guid: 4d3ae796156a85c4d9164dfb2abbc433, type: 3}
-  - {fileID: -443266798, guid: 4d3ae796156a85c4d9164dfb2abbc433, type: 3}
-  - {fileID: 682087038, guid: 4d3ae796156a85c4d9164dfb2abbc433, type: 3}
+  - {fileID: -923499609, guid: 4f15f212e606e9e418dfdd1750c5eb9b, type: 3}
+  - {fileID: -49683957, guid: 4f15f212e606e9e418dfdd1750c5eb9b, type: 3}
+  - {fileID: -1713076327, guid: 4f15f212e606e9e418dfdd1750c5eb9b, type: 3}
   armLRAccent: {fileID: 2143105962}
   armLRAccentSprites:
-  - {fileID: -1466876924, guid: 4d3ae796156a85c4d9164dfb2abbc433, type: 3}
-  - {fileID: 1353386462, guid: 4d3ae796156a85c4d9164dfb2abbc433, type: 3}
-  - {fileID: -1219403533, guid: 4d3ae796156a85c4d9164dfb2abbc433, type: 3}
+  - {fileID: -1099931605, guid: 4f15f212e606e9e418dfdd1750c5eb9b, type: 3}
+  - {fileID: -1913257160, guid: 4f15f212e606e9e418dfdd1750c5eb9b, type: 3}
+  - {fileID: -1909132704, guid: 4f15f212e606e9e418dfdd1750c5eb9b, type: 3}
   legsMain: {fileID: 1642918002}
 --- !u!1 &519420028
 GameObject:
@@ -1208,7 +1208,7 @@ Transform:
   m_GameObject: {fileID: 572393170}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.655, y: -0.333, z: 0}
+  m_LocalPosition: {x: -18, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1259,6 +1259,9 @@ MonoBehaviour:
   crouchCheckA: {x: 0.3625, y: 0.85625}
   crouchCheckB: {x: -0.3625, y: 0}
   xVel: 0
+  onStateChange:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!50 &572393175
 Rigidbody2D:
   serializedVersion: 4
@@ -3868,8 +3871,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1642918001}
   - {fileID: 832974742}
+  - {fileID: 1642918001}
   m_Father: {fileID: 572393173}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2143105960
