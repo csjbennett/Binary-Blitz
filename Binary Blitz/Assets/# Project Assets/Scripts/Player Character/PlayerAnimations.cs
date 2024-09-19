@@ -7,6 +7,8 @@ public class PlayerAnimations : MonoBehaviour
     private PlayerMove player;
     public Animator armAnm;
     public Animator legAnm;
+    public Transform torso;
+    public Transform legs;
 
     private bool canWalk = true;
     private bool isWalking = false;
@@ -28,6 +30,15 @@ public class PlayerAnimations : MonoBehaviour
         if (canWalk)
         {
 
+        }
+
+        if (player.CanChangeDirection())
+        {
+            var vel = player.GetVelocity();
+            if (vel.x > 0)
+                legs.eulerAngles = rightFacing;
+            if (vel.x < 0)
+                legs.eulerAngles = leftFacing;
         }
     }
 

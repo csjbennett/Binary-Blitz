@@ -95,14 +95,14 @@ public class PlayerMove : MonoBehaviour
     [HideInInspector]
     public UnityEvent onStateChange;
 
-    // Start is called before the first frame update
+    // Initialize components
     void Start()
     {
         rigBod = GetComponent<Rigidbody2D>();
         capsuleCollider = GetComponent<CapsuleCollider2D>();
     }
 
-    // Update is called once per frame
+    // Handle inputs
     void Update()
     {
         // Set public variables
@@ -281,9 +281,9 @@ public class PlayerMove : MonoBehaviour
                     playerDirection = Direction.right;
 
                     // Start wallslide
-                    if ((x > 0 || rigBod.velocity.x > 0.1f) || (playerState == State.wallSlidingRight && x! < 0))
+                    if ((x > 0 || rigBod.velocity.x > 0.1f) || (playerState == State.wallSlidingRight && x !< 0))
                         ChangeState(State.wallSlidingRight);
-                    else
+                    else if (x < 0)
                     {
                         ChangeState(State.airborn);
                         return;
@@ -304,9 +304,9 @@ public class PlayerMove : MonoBehaviour
                     playerDirection = Direction.left;
 
                     // Start wallslide
-                    if ((x < 0 || rigBod.velocity.x < -0.1f) || (playerState == State.wallSlidingLeft && x! > 0))
+                    if ((x < 0 || rigBod.velocity.x < -0.1f) || (playerState == State.wallSlidingLeft && x !> 0))
                         ChangeState(State.wallSlidingLeft);
-                    else
+                    else if (x > 0)
                     {
                         ChangeState(State.airborn);
                         return;
@@ -593,10 +593,7 @@ public class PlayerMove : MonoBehaviour
             hit = Physics2D.Raycast(transform.position + clamberHeightOffsets[i], new Vector2(x, 0), clamberReach, groundAndWallCheckLayers);
             
             if (hit.collider != null)
-            {
-                Debug.Log("got a wall hit with offset " + clamberHeightOffsets[i].ToString() + ", or: " + i.ToString());
                 break;
-            }
         }
 
         return hit;
@@ -626,7 +623,7 @@ public class PlayerMove : MonoBehaviour
     public bool CanChangeDirection()
     { return canChangeDirection; }
 
-    // Input getters
+    // Variable getters
     public float GetX()
     {
         return x;
@@ -642,5 +639,9 @@ public class PlayerMove : MonoBehaviour
     public float GetC()
     {
         return c;
+    }
+    public Vector2 GetVelocity()
+    {
+        return rigBod.velocity;
     }
 }
