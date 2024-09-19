@@ -909,7 +909,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.13632752, g: 0.15471691, b: 0, a: 0}
+  m_BackGroundColor: {r: 0.13207549, g: 0.13207549, b: 0.13207549, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1232,13 +1232,13 @@ MonoBehaviour:
   playerDirection: 0
   moveForce: 5000
   moveForceMod: 1
-  clamberReach: 0.75
+  clamberReach: 1.25
   clamberSpeed: 7.5
   clamberSpeedMod: 1
   jumpForceInitial: 6.75
   jumpForceSustained: 1200
   jumpForceMod: 1
-  wallJumpVelocity: {x: 5, y: 5}
+  wallJumpVelocity: {x: 6.25, y: 6.25}
   groundedDrag: 15
   airbornDrag: 0
   minTimeUntilAdditionalJumpForces: 0.1

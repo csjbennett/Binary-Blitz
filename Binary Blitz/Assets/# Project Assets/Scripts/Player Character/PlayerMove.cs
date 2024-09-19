@@ -214,13 +214,16 @@ public class PlayerMove : MonoBehaviour
         }
         else if (playerState == State.clambering)
         {
-            //// Match clamberTarget's y position
-            //if (Mathf.Abs(transform.position.y - clamberTarget.y) > 0.5f)
-            //{
-            //    rigBod.velocity = new Vector2(0, clamberTarget.y - transform.position.y).normalized * clamberSpeed * clamberSpeedMod;
-            //}
-            //// Match clamberTarget's x position
-            /*else*/ if (Mathf.Abs(transform.position.x - clamberTarget.x) > 0.125f)
+            float xDist = Mathf.Abs(transform.position.x - clamberTarget.x);
+            float yDist = Mathf.Abs(transform.position.y - clamberTarget.y);
+
+            // Match clamberTarget's y position
+            if (yDist > 0.5f && xDist < 0.8f)
+            {
+                rigBod.velocity = new Vector2(0, clamberTarget.y - transform.position.y).normalized * clamberSpeed * clamberSpeedMod;
+            }
+            // Match clamberTarget's x position
+            else if (xDist > 0.125f)
             {
                 rigBod.velocity = new Vector2(clamberTarget.x - transform.position.x, clamberTarget.y - transform.position.y).normalized * clamberSpeed * clamberSpeedMod;
             }
@@ -241,9 +244,12 @@ public class PlayerMove : MonoBehaviour
         {
             // Ground-independent state checks ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-            // Start clamber, canno begin clamber while ground sliding
+            // Start clamber, cannot begin clamber while ground sliding
             if (c > 0 && CanClamber())
+            {
+                StartClamber();
                 return;
+            }
 
             // On the ground ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             if (CheckAreaRelative(groundCheckA, groundCheckB))
@@ -323,6 +329,9 @@ public class PlayerMove : MonoBehaviour
                 canStand = true;
             }
         }
+        // Stop trying to change state if player is clambering
+        else if (playerState == State.clambering)
+            return;
 
         // Set player drag and airtime
         // Airborn
@@ -459,8 +468,8 @@ public class PlayerMove : MonoBehaviour
     // Walljump functions
     private void WalljumpToTheLeft()
     {
-        // Add jump force                    Reverse jump direction
-        rigBod.velocity = wallJumpVelocity * new Vector2(-1, 1);
+        // Add jump force                                   Reverse jump direction
+        rigBod.velocity = wallJumpVelocity * jumpForceMod * new Vector2(-1, 1);
 
         // Change state
         ChangeState(State.airborn);
@@ -470,7 +479,7 @@ public class PlayerMove : MonoBehaviour
     private void WalljumpToTheRight()
     {
         // Add jump force
-        rigBod.velocity = wallJumpVelocity;
+        rigBod.velocity = wallJumpVelocity * jumpForceMod;
 
         // Change state
         ChangeState(State.airborn);
@@ -486,24 +495,25 @@ public class PlayerMove : MonoBehaviour
         capsuleCollider.offset = Vector2.zero;
         // State must be manually changed here to prevent state changes from occurring while clambering
         playerState = State.clambering;
-        onStateChange.Invoke();
         canChangeState = false;
         canChangeDirection = false;
+        onStateChange.Invoke();
+        StopAllCoroutines();
     }
-
     private void StopClamber()
     {
         rigBod.gravityScale = 1;
+        rigBod.drag = groundedDrag;
         capsuleCollider.size = standingColSize;
         capsuleCollider.offset = standingColOffset;
         clamberTarget = Vector2.zero;
         canChangeState = true;
         canChangeDirection = true;
+        onStateChange.Invoke();
+        StopAllCoroutines();
     }
-
     private bool CanClamber()
     {
-        bool canClamber;
         Vector2 wallPos;
         Vector2 floorCheckPos;
         RaycastHit2D wallHit;
@@ -526,7 +536,6 @@ public class PlayerMove : MonoBehaviour
 
         // Check for a floor where clamber is being attempted
         floorHit = Physics2D.Raycast(floorCheckPos, Vector2.down * 2f, 2.5f, groundAndWallCheckLayers);
-        // Debug.DrawLine(floorCheckPos, floorCheckPos + (Vector2.down * 2f), Color.red, 5f);
         if (floorHit.collider != null)
         {
             // Get position of the corner where clamber is being attempted
@@ -546,27 +555,27 @@ public class PlayerMove : MonoBehaviour
             Vector2 offset = Vector2.up * 0.125f;
             if (!CheckArea(clamberTarget, (standingColSize / 2f) + standingColOffset + offset, (-standingColSize / 2f) + standingColOffset + offset))
             {
-                canClamber = true;
-                this.clamberTarget = clamberTarget;
-                StartClamber();
+                // Check if there is anything blocking you on the clamber's path
+                if (PathIsClamberable(transform.position, clamberTarget))
+                {
+                    this.clamberTarget = clamberTarget;
+                    return true;
+                }
+                else
+                    return false;
             }
             else
-                canClamber = false;
-
-            // Debug.DrawLine(clamberTarget + (standingColSize / 2f) + standingColOffset, clamberTarget + (-standingColSize / 2f) + standingColOffset, Color.red, 5f);
+                return false;
         }
         else
             return false;
-
-        return canClamber;
     }
-
     // Height offsets used for wall checks during a clamber check
     private Vector3[] clamberHeightOffsets = new Vector3[3]
     {
-        new Vector3(0, 0.5f),
+        new Vector3(0, 0.66f),
         new Vector3(0, 0),
-        new Vector3(0, -0.5f)
+        new Vector3(0, -0.66f)
     };
     // Checks at 3 different heights to see if there is a wall anywhere
     private RaycastHit2D GetWallHit()
@@ -581,13 +590,36 @@ public class PlayerMove : MonoBehaviour
 
         for (int i = 0; i < 3; i++)
         {
-            hit = Physics2D.Raycast(transform.position + clamberHeightOffsets[i], new Vector2(x, 0), 0.5f, groundAndWallCheckLayers);
-
+            hit = Physics2D.Raycast(transform.position + clamberHeightOffsets[i], new Vector2(x, 0), clamberReach, groundAndWallCheckLayers);
+            
             if (hit.collider != null)
+            {
+                Debug.Log("got a wall hit with offset " + clamberHeightOffsets[i].ToString() + ", or: " + i.ToString());
                 break;
+            }
         }
 
         return hit;
+    }
+    // Returns a boolean that tells you if the clamber's path is open
+    private bool PathIsClamberable(Vector2 playerPos, Vector2 targetPos)
+    {
+        float yAmount = targetPos.y - playerPos.y;
+        float xAmount = targetPos.x - playerPos.x;
+
+        // Check vertical path to target
+        if (Physics2D.RaycastAll(playerPos, Vector3.up * yAmount, yAmount, groundAndWallCheckLayers).Length == 0)
+        {
+            // Check horizontal path to target from vertical offset
+            if (Physics2D.RaycastAll(playerPos + (Vector2.up * yAmount), Vector2.right * xAmount, xAmount, groundAndWallCheckLayers).Length == 0)
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+        else
+            return false;
     }
 
     // Allows other scripts to check if player can change direction
