@@ -60,16 +60,24 @@ public class PlayerMove : MonoBehaviour
     public Vector2 crouchCheckA;
     public Vector2 crouchCheckB;
 
+    [Space(10)]
+    [Header("Player Pivot")]
+    public Transform playerPivot;
+    public float playerPivotGroundslideYOffset;
+
     // Misc. public variables
     [HideInInspector]
     public float xVel;
 
-    // Misc. variables variables
-    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`
+    // Misc. variables
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Movement variables
     private bool canJump = true;
     private bool canStand = true;
     private bool groundSliding = false;
+
+    // Animation controller
+    private PlayerAnimations playerAnimator;
 
     // Physics
     private Rigidbody2D rigBod;
@@ -100,6 +108,7 @@ public class PlayerMove : MonoBehaviour
     {
         rigBod = GetComponent<Rigidbody2D>();
         capsuleCollider = GetComponent<CapsuleCollider2D>();
+        playerAnimator = GetComponent<PlayerAnimations>();
     }
 
     // Handle inputs
@@ -364,6 +373,7 @@ public class PlayerMove : MonoBehaviour
             {
                 capsuleCollider.size = slidingColSize;
                 capsuleCollider.offset = slidingColOffset;
+                playerPivot.localPosition = Vector2.up * playerPivotGroundslideYOffset;
 
                 groundSliding = true;
             }
@@ -375,6 +385,7 @@ public class PlayerMove : MonoBehaviour
             {
                 capsuleCollider.size = standingColSize;
                 capsuleCollider.offset = standingColOffset;
+                playerPivot.localPosition = Vector2.zero;
 
                 groundSliding = false;
             }
@@ -470,7 +481,8 @@ public class PlayerMove : MonoBehaviour
     {
         // Add jump force                                   Reverse jump direction
         rigBod.velocity = wallJumpVelocity * jumpForceMod * new Vector2(-1, 1);
-
+        // Flip legs
+        playerAnimator.ForceLegDirection(PlayerAnimations.LegDirection.left);
         // Change state
         ChangeState(State.airborn);
         canJump = false;
@@ -480,7 +492,8 @@ public class PlayerMove : MonoBehaviour
     {
         // Add jump force
         rigBod.velocity = wallJumpVelocity * jumpForceMod;
-
+        // Flip legs
+        playerAnimator.ForceLegDirection(PlayerAnimations.LegDirection.right);
         // Change state
         ChangeState(State.airborn);
         canJump = false;
@@ -573,9 +586,9 @@ public class PlayerMove : MonoBehaviour
     // Height offsets used for wall checks during a clamber check
     private Vector3[] clamberHeightOffsets = new Vector3[3]
     {
-        new Vector3(0, 0.66f),
+        new Vector3(0, 0.525f),
         new Vector3(0, 0),
-        new Vector3(0, -0.66f)
+        new Vector3(0, -0.525f)
     };
     // Checks at 3 different heights to see if there is a wall anywhere
     private RaycastHit2D GetWallHit()
@@ -588,15 +601,29 @@ public class PlayerMove : MonoBehaviour
         else
             x = -1;
 
+        // Check side player is facing first
+        if (CheckSideForClamber(x, out hit))
+            return hit;
+        // Check other side just in case
+        else if (CheckSideForClamber(-x, out hit))
+            return hit;
+
+        return hit;
+    }
+    private bool CheckSideForClamber(float x, out RaycastHit2D hit)
+    {
         for (int i = 0; i < 3; i++)
         {
             hit = Physics2D.Raycast(transform.position + clamberHeightOffsets[i], new Vector2(x, 0), clamberReach, groundAndWallCheckLayers);
-            
+
             if (hit.collider != null)
-                break;
+            {
+                return true;
+            }
         }
 
-        return hit;
+        hit = new RaycastHit2D();
+        return false;
     }
     // Returns a boolean that tells you if the clamber's path is open
     private bool PathIsClamberable(Vector2 playerPos, Vector2 targetPos)
