@@ -115,7 +115,7 @@ public class PlayerMove : MonoBehaviour
     void Update()
     {
         // Set public variables
-        xVel = rigBod.velocity.x;
+        xVel = rigBod.linearVelocity.x;
 
         // Set private variables
         x = Input.GetAxis("Horizontal");
@@ -147,9 +147,9 @@ public class PlayerMove : MonoBehaviour
             }
 
             // Direction change
-            if (rigBod.velocity.x < 0)
+            if (rigBod.linearVelocity.x < 0)
                 playerDirection = Direction.left;
-            if (rigBod.velocity.x > 0)
+            if (rigBod.linearVelocity.x > 0)
                 playerDirection = Direction.right;
         }
         else if (playerState == State.airborn)
@@ -169,7 +169,7 @@ public class PlayerMove : MonoBehaviour
                         airtime = jumpTime;
 
                     // Airborn movement
-                    float xVel = Mathf.Abs(rigBod.velocity.x);
+                    float xVel = Mathf.Abs(rigBod.linearVelocity.x);
                     if (xVel < maxAirbornOrSlidingVel)
                         rigBod.AddForce(Vector3.right * x * airbornManeuverability * Time.fixedDeltaTime, ForceMode2D.Force);
                 }
@@ -181,15 +181,15 @@ public class PlayerMove : MonoBehaviour
             rigBod.AddForce(Vector3.right * x);
 
             // Change player direction based on velocity
-            if (rigBod.velocity.x < 0)
+            if (rigBod.linearVelocity.x < 0)
                 playerDirection = Direction.left;
-            else if (rigBod.velocity.x > 0)
+            else if (rigBod.linearVelocity.x > 0)
                 playerDirection = Direction.right;
         }
         else if (playerState == State.groundSliding)
         {
             // Airborn movement
-            float xVel = Mathf.Abs(rigBod.velocity.x);
+            float xVel = Mathf.Abs(rigBod.linearVelocity.x);
             if (xVel < maxAirbornOrSlidingVel)
                 rigBod.AddForce(Vector3.right * x * airbornManeuverability * Time.fixedDeltaTime, ForceMode2D.Force);
 
@@ -229,12 +229,12 @@ public class PlayerMove : MonoBehaviour
             // Match clamberTarget's y position
             if (yDist > 0.5f && xDist < 0.8f)
             {
-                rigBod.velocity = new Vector2(0, clamberTarget.y - transform.position.y).normalized * clamberSpeed * clamberSpeedMod;
+                rigBod.linearVelocity = new Vector2(0, clamberTarget.y - transform.position.y).normalized * clamberSpeed * clamberSpeedMod;
             }
             // Match clamberTarget's x position
             else if (xDist > 0.125f)
             {
-                rigBod.velocity = new Vector2(clamberTarget.x - transform.position.x, clamberTarget.y - transform.position.y).normalized * clamberSpeed * clamberSpeedMod;
+                rigBod.linearVelocity = new Vector2(clamberTarget.x - transform.position.x, clamberTarget.y - transform.position.y).normalized * clamberSpeed * clamberSpeedMod;
             }
             else
                 StopClamber();
@@ -285,13 +285,14 @@ public class PlayerMove : MonoBehaviour
                 // Wallslide right ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                 if (CheckAreaRelative(wallCheckRA, wallCheckRB))
                 {
-                    // Disable changing directions
-                    canChangeDirection = false;
-                    playerDirection = Direction.right;
-
                     // Start wallslide
-                    if ((x > 0 || rigBod.velocity.x > 0.1f) || (playerState == State.wallSlidingRight && x !< 0))
+                    if (playerState != State.wallSlidingRight && ((x > 0 || rigBod.linearVelocity.x > 0.1f) || (playerState == State.wallSlidingRight && x! < 0)))
+                    {
+                        // Disable changing directions
+                        canChangeDirection = false;
+                        playerDirection = Direction.right;
                         ChangeState(State.wallSlidingRight);
+                    }
                     else if (x < 0)
                     {
                         ChangeState(State.airborn);
@@ -308,13 +309,14 @@ public class PlayerMove : MonoBehaviour
                 // Wallslide left ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                 else if (CheckAreaRelative(wallCheckLA, wallCheckLB))
                 {
-                    // Disable changing directions
-                    canChangeDirection = false;
-                    playerDirection = Direction.left;
-
                     // Start wallslide
-                    if ((x < 0 || rigBod.velocity.x < -0.1f) || (playerState == State.wallSlidingLeft && x !> 0))
+                    if (playerState != State.wallSlidingLeft && ((x < 0 || rigBod.linearVelocity.x < -0.1f) || (playerState == State.wallSlidingLeft && x! > 0)))
+                    {
+                        // Disable changing directions
+                        canChangeDirection = false;
+                        playerDirection = Direction.left;
                         ChangeState(State.wallSlidingLeft);
+                    }
                     else if (x > 0)
                     {
                         ChangeState(State.airborn);
@@ -346,7 +348,7 @@ public class PlayerMove : MonoBehaviour
         // Airborn
         if (playerState == State.airborn)
         {
-            rigBod.drag = airbornDrag;
+            rigBod.linearDamping = airbornDrag;
         }
         // Grounded
         else
@@ -354,13 +356,13 @@ public class PlayerMove : MonoBehaviour
             // Not sliding (increase friction)
             if (playerState != State.groundSliding)
             {
-                rigBod.drag = groundedDrag;
+                rigBod.linearDamping = groundedDrag;
                 airtime = 0;
             }
             // Sliding (decrease friction)
             else
             {
-                rigBod.drag = airbornDrag;
+                rigBod.linearDamping = airbornDrag;
                 airtime = 0;
             }
         }
@@ -399,9 +401,12 @@ public class PlayerMove : MonoBehaviour
     // Forces a specific state, usually from an outside source
     public void ChangeState(State newState)
     {
+        if (playerState == newState)
+            return;
+
         playerState = newState;
         onStateChange.Invoke();
-
+        //Debug.Log($"player state: {newState}\ntime: {Time.time}");
         StartStateCooldown();
     }
 
@@ -480,7 +485,7 @@ public class PlayerMove : MonoBehaviour
     private void WalljumpToTheLeft()
     {
         // Add jump force                                   Reverse jump direction
-        rigBod.velocity = wallJumpVelocity * jumpForceMod * new Vector2(-1, 1);
+        rigBod.linearVelocity = wallJumpVelocity * jumpForceMod * new Vector2(-1, 1);
         // Flip legs
         playerAnimator.ForceLegDirection(PlayerAnimations.LegDirection.left);
         // Change state
@@ -491,7 +496,7 @@ public class PlayerMove : MonoBehaviour
     private void WalljumpToTheRight()
     {
         // Add jump force
-        rigBod.velocity = wallJumpVelocity * jumpForceMod;
+        rigBod.linearVelocity = wallJumpVelocity * jumpForceMod;
         // Flip legs
         playerAnimator.ForceLegDirection(PlayerAnimations.LegDirection.right);
         // Change state
@@ -503,7 +508,7 @@ public class PlayerMove : MonoBehaviour
     private void StartClamber()
     {
         rigBod.gravityScale = 0;
-        rigBod.drag = groundedDrag;
+        rigBod.linearDamping = groundedDrag;
         capsuleCollider.size = slidingColSize;
         capsuleCollider.offset = Vector2.zero;
         // State must be manually changed here to prevent state changes from occurring while clambering
@@ -516,7 +521,7 @@ public class PlayerMove : MonoBehaviour
     private void StopClamber()
     {
         rigBod.gravityScale = 1;
-        rigBod.drag = groundedDrag;
+        rigBod.linearDamping = groundedDrag;
         capsuleCollider.size = standingColSize;
         capsuleCollider.offset = standingColOffset;
         clamberTarget = Vector2.zero;
@@ -584,11 +589,12 @@ public class PlayerMove : MonoBehaviour
             return false;
     }
     // Height offsets used for wall checks during a clamber check
-    private Vector3[] clamberHeightOffsets = new Vector3[3]
+    private Vector3[] clamberHeightOffsets = new Vector3[4]
     {
         new Vector3(0, 0.525f),
         new Vector3(0, 0),
-        new Vector3(0, -0.525f)
+        new Vector3(0, -0.525f),
+        new Vector3(0, -0.875f)
     };
     // Checks at 3 different heights to see if there is a wall anywhere
     private RaycastHit2D GetWallHit()
@@ -612,7 +618,7 @@ public class PlayerMove : MonoBehaviour
     }
     private bool CheckSideForClamber(float x, out RaycastHit2D hit)
     {
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < clamberHeightOffsets.Length; i++)
         {
             hit = Physics2D.Raycast(transform.position + clamberHeightOffsets[i], new Vector2(x, 0), clamberReach, groundAndWallCheckLayers);
 
@@ -669,6 +675,6 @@ public class PlayerMove : MonoBehaviour
     }
     public Vector2 GetVelocity()
     {
-        return rigBod.velocity;
+        return rigBod.linearVelocity;
     }
 }
