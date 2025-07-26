@@ -16,26 +16,26 @@ public class PlayerMove : MonoBehaviour
     public enum Direction { right, left };
 
     [Space(10)][Header("Movement Traits")]
-    public float moveForce;
+    [SerializeField] private float moveForce;
     public float moveForceMod = 1f;
     [Space()]
-    public float clamberReach;
-    public float clamberSpeed;
+    [SerializeField] private float clamberReach;
+    [SerializeField] private float clamberSpeed;
     public float clamberSpeedMod = 1f;
     [Space()]
-    public float jumpForceInitial;
-    public float jumpForceSustained;
+    [SerializeField] private float jumpForceInitial;
+    [SerializeField] private float jumpForceSustained;
     public float jumpForceMod = 1f;
-    public Vector2 wallJumpVelocity;
+    [SerializeField] private Vector2 wallJumpVelocity;
     [Space()]
-    public float groundedDrag = 2.5f;
-    public float airbornDrag = 0;
-    public float minTimeUntilAdditionalJumpForces = 0.1f;
-    public float jumpTime = 0.25f;
+    [SerializeField] private float groundedDrag = 2.5f;
+    [SerializeField] private float airbornDrag = 0;
+    [SerializeField] private float minTimeUntilAdditionalJumpForces = 0.1f;
+    [SerializeField] private float jumpTime = 0.25f;
+    [SerializeField] private float extraGravity;
+    [SerializeField] private float airbornManeuverability;
+    [SerializeField] private float airbornManeuverabilityMod = 1f;
     private float airtime = 0f;
-    public float extraGravity;
-    public float airbornManeuverability;
-    public float airbornManeuverabilityMod = 1f;
 
     [Space(10)][Header("Ground Check Layermask")]
     public LayerMask groundAndWallCheckLayers;
@@ -67,11 +67,12 @@ public class PlayerMove : MonoBehaviour
 
     // Misc. public variables
     [HideInInspector]
-    public float xVel;
+    public float xVel { get; private set; }
 
     // Misc. variables
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Movement variables
+    private bool canMove = true;
     private bool canJump = true;
     private bool canStand = true;
     private bool groundSliding = false;
@@ -87,7 +88,7 @@ public class PlayerMove : MonoBehaviour
     // Collider stuff
     private Vector2 standingColSize = new Vector2(0.75f, 1.85f);
     private Vector2 standingColOffset = new Vector2(0, -0.075f);
-    private Vector2 slidingColSize = new Vector2(0.75f, 0.95f);
+    private Vector2 slidingColSize = new Vector2(0.75f, 0.925f);
     private Vector2 slidingColOffset = new Vector2(0, -0.525f);
 
     // Clamber stuff
@@ -118,10 +119,13 @@ public class PlayerMove : MonoBehaviour
         xVel = rigBod.linearVelocity.x;
 
         // Set private variables
-        x = Input.GetAxis("Horizontal");
-        y = Input.GetAxis("Vertical");
-        j = Input.GetAxis("Jump");
-        c = Input.GetAxis("Clamber");
+        if (canMove)
+        {
+            x = Input.GetAxis("Horizontal");
+            y = Input.GetAxis("Vertical");
+            j = Input.GetAxis("Jump");
+            c = Input.GetAxis("Clamber");
+        }
 
         // Update player state before performing movement actions
         UpdateState();
@@ -130,6 +134,7 @@ public class PlayerMove : MonoBehaviour
     // Apply movement physics
     private void FixedUpdate()
     {
+        // Grounded mechanics ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         if (playerState == State.grounded)
         {
             // Move force
@@ -152,6 +157,8 @@ public class PlayerMove : MonoBehaviour
             if (rigBod.linearVelocity.x > 0)
                 playerDirection = Direction.right;
         }
+
+        // Airborn mechanics ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         else if (playerState == State.airborn)
         {
             // Allows for short-hops and long-hops depending on how long jump key is held
@@ -186,6 +193,8 @@ public class PlayerMove : MonoBehaviour
             else if (rigBod.linearVelocity.x > 0)
                 playerDirection = Direction.right;
         }
+
+        // Groundsliding mechancis ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         else if (playerState == State.groundSliding)
         {
             // Airborn movement
@@ -203,6 +212,8 @@ public class PlayerMove : MonoBehaviour
                 canJump = false;
             }
         }
+
+        // Wallsliding (right) mechanics ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         else if (playerState == State.wallSlidingRight)
         {
             // Walljump
@@ -212,6 +223,8 @@ public class PlayerMove : MonoBehaviour
             else
                 rigBod.AddForce(Vector2.up * -extraGravity * Time.fixedDeltaTime, ForceMode2D.Force);
         }
+
+        // Wallsliding (left) mechanics ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         else if (playerState == State.wallSlidingLeft)
         {
             // Walljump
@@ -221,6 +234,8 @@ public class PlayerMove : MonoBehaviour
             else
                 rigBod.AddForce(Vector2.up * -extraGravity * Time.fixedDeltaTime, ForceMode2D.Force);
         }
+
+        // Clambering mechanics ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         else if (playerState == State.clambering)
         {
             float xDist = Mathf.Abs(transform.position.x - clamberTarget.x);
@@ -406,8 +421,10 @@ public class PlayerMove : MonoBehaviour
 
         playerState = newState;
         onStateChange.Invoke();
-        //Debug.Log($"player state: {newState}\ntime: {Time.time}");
         StartStateCooldown();
+
+        if (debugMode)
+            Debug.Log($"player state: {newState}\ntime: {Time.time}");
     }
 
     // Start cooldown for changing state again
@@ -482,6 +499,7 @@ public class PlayerMove : MonoBehaviour
     }
 
     // Walljump functions
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     private void WalljumpToTheLeft()
     {
         // Add jump force                                   Reverse jump direction
@@ -492,7 +510,6 @@ public class PlayerMove : MonoBehaviour
         ChangeState(State.airborn);
         canJump = false;
     }
-
     private void WalljumpToTheRight()
     {
         // Add jump force
@@ -505,6 +522,7 @@ public class PlayerMove : MonoBehaviour
     }
 
     // Clamber functions / class
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     private void StartClamber()
     {
         rigBod.gravityScale = 0;
@@ -653,6 +671,7 @@ public class PlayerMove : MonoBehaviour
     }
 
     // Allows other scripts to check if player can change direction
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     public bool CanChangeDirection()
     { return canChangeDirection; }
 
@@ -677,4 +696,15 @@ public class PlayerMove : MonoBehaviour
     {
         return rigBod.linearVelocity;
     }
+
+    // Public setter methods (misc. functions)
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    public void ToggleMovement(bool canMove)
+    { this.canMove = canMove; }
+
+    public void AddForce(Vector2 force)
+    { rigBod.AddForce(force, ForceMode2D.Impulse); }
+
+    public void SetVelocity(Vector2 velocity)
+    { rigBod.linearVelocity = velocity; }
 }

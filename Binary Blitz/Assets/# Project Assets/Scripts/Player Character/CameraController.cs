@@ -13,6 +13,8 @@ public class CameraController : MonoBehaviour
     public float playerBias = 4f;
     public float cameraLerpSpeed = 5f;
 
+    public enum FollowType { lerp, snappy };
+    public FollowType followType;
     public enum CameraType { follow, fixedPos };
     public CameraType cameraType;
 
@@ -20,6 +22,8 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         defaultCameraSize = mainCamera.orthographicSize;
+
+        mainCameraTransform.position = player.position + new Vector3(0, 0, -10);
     }
 
     // Update is called once per frame
@@ -40,7 +44,11 @@ public class CameraController : MonoBehaviour
             playerPos.z = -10;
 
             Vector3 targetPosition = ((playerPos * playerBias) + (mousePosWorldspace * mouseBias)) / (playerBias + mouseBias);
-            mainCameraTransform.position = Vector3.Lerp(mainCameraTransform.position, targetPosition, Time.deltaTime * cameraLerpSpeed);
+
+            if (followType == FollowType.lerp)
+                mainCameraTransform.position = Vector3.Lerp(mainCameraTransform.position, targetPosition, Time.deltaTime * cameraLerpSpeed);
+            else
+                mainCameraTransform.position = targetPosition;
         }
     }
 
